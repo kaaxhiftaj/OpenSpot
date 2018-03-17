@@ -49,6 +49,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.8.1'
     compile 'com.android.support:multidex:1.0.2'
     compile 'com.android.support:cardview-v7:27.0.2'
+    compile 'us.belka:androidtoggleswitch:1.2.2'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.android.support:recyclerview-v7:27.0.2'
@@ -59,7 +60,7 @@ dependencies {
     compile 'io.nlopez.smartlocation:rx:3.3.1'
     compile 'com.firebase:firebase-jobdispatcher:0.8.5'
     compile 'com.google.android.gms:play-services-maps:11.4.2'
-
+    compile 'com.github.AnthonyFermin:DropDownView:1.0.1'
 
 
     testImplementation 'junit:junit:4.12'

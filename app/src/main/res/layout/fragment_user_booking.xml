@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:background="#eee"
+    android:orientation="vertical"
+    tools:context="com.techease.openspot.fragments.UserBookingFragment">
+
+    <belka.us.androidtoggleswitch.widgets.ToggleSwitch
+        android:layout_width="wrap_content"
+        android:layout_height="40sp"
+        custom:toggleWidth="125dp"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:layout_gravity="center"
+        custom:activeBgColor="@color/colorPrimary"
+        custom:activeTextColor="@android:color/white"
+        custom:inactiveBgColor="#BDBDBD"
+        custom:inactiveTextColor="@android:color/white"
+        custom:cornerRadius="20sp"
+        android:layout_marginTop="20sp"
+        custom:textToggleLeft="BOOKING"
+        custom:textToggleRight="FAVOURITE"/>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:id="@+id/rvUserBooking"></android.support.v7.widget.RecyclerView>
+</LinearLayout>

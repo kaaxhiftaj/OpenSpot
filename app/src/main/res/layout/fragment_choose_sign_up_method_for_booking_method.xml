@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    tools:context="com.techease.openspot.fragments.ChooseSignUpMethodForBookingMethod">
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Booking"
+      android:textSize="20sp"
+      android:textColor="#757575"
+      android:layout_marginBottom="20sp"
+      android:layout_gravity="center"
+      android:layout_marginTop="20sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#eee"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo_dark2"
+            android:layout_gravity="center"
+            android:layout_marginTop="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30sp"
+            android:text="Connect with OPENSPOT
+    to see your bookings"
+            android:layout_gravity="center"/>
+        <Button
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_fbbutton"
+        android:layout_gravity="center"
+        android:text="CONNECT WITH FACEBOOK"
+        android:textColor="#fff"
+        android:layout_marginTop="30sp"/>
+        <Button
+            android:layout_width="250sp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_btn_green"
+            android:layout_gravity="center"
+            android:text="CONNECT WITH EMAIL"
+            android:textColor="#fff"
+            android:layout_marginTop="20sp"/>
+    </LinearLayout>
+
+</LinearLayout>
