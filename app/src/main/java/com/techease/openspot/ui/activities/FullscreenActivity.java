@@ -1,18 +1,15 @@
 package com.techease.openspot.ui.activities;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.techease.openspot.R;
-import com.techease.openspot.fragments.ListOfAllBooking;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -86,14 +83,17 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+       // requestWindowFeature(Window.FEATURE_NO_TITLE);
+      //  getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_fullscreen);
 
         mVisible = true;
 
-        Fragment fragment=new ListOfAllBooking();
-        getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+        startActivity(new Intent(FullscreenActivity.this, BottomNavigationActivity.class));
+        finish();
+
+//        Fragment fragment=new BottomNavigationDrawerFragment();
+//        getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.

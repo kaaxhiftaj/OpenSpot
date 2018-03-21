@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+
+        android:id="@+id/search"
+
+        android:title="Search"
+
+        android:icon="@drawable/search_white"
+
+        android:enabled="true"
+
+        app:showAsAction="ifRoom" />
+    <item
+
+        android:id="@+id/booking"
+
+        android:title="Bookings"
+
+        android:icon="@drawable/booking_white"
+
+        android:enabled="true"
+
+        app:showAsAction="ifRoom" />
+
+    <item
+
+        android:id="@+id/profile"
+
+        android:title="Profile"
+
+        android:icon="@drawable/profile_white"
+
+        android:enabled="true"
+
+        app:showAsAction="ifRoom" />
+
+</menu>

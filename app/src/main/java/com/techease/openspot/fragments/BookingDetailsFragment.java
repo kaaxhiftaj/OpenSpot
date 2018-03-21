@@ -1,5 +1,7 @@
 package com.techease.openspot.fragments;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -12,24 +14,22 @@ import android.widget.TextView;
 import com.techease.openspot.R;
 
 
-public class ProfileFragment extends Fragment {
+public class BookingDetailsFragment extends Fragment {
 
-    Button btnSignOut;
-
+    Button btnChange;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_profile, container, false);
+        View view= inflater.inflate(R.layout.fragment_booking_details, container, false);
 
         customActionBar();
-        btnSignOut=(Button)view.findViewById(R.id.btnSignOut);
-
-        btnSignOut.setOnClickListener(new View.OnClickListener() {
+        btnChange=(Button)view.findViewById(R.id.btnChange);
+        btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment=new ChooseSignUpMethodForBooking();
-                getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
+                Fragment fragment=new BookingInformationFragment();
+                getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
             }
         });
         return view;
@@ -42,7 +42,7 @@ public class ProfileFragment extends Fragment {
         LayoutInflater mInflater = LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.custom_actionabr, null);
         TextView textView=(TextView)mCustomView.findViewById(R.id.tvActoinBarTitle);
-        textView.setText("PROFILE");
+        textView.setText(" ");
 
     }
 }

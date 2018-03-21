@@ -4,25 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#fff"
-    tools:context="com.techease.openspot.fragments.ChooseSignUpMethodForBookingMethod">
+    tools:context="com.techease.openspot.fragments.ChooseSignUpMethodForBooking">
 
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Booking"
-      android:textSize="20sp"
-      android:textColor="#757575"
-      android:layout_marginBottom="20sp"
-      android:layout_gravity="center"
-      android:layout_marginTop="20sp"/>
+  <!--<TextView-->
+      <!--android:id="@+id/tvTitle"-->
+      <!--android:layout_width="wrap_content"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:text="Booking"-->
+      <!--android:textStyle="bold"-->
+      <!--android:textSize="20sp"-->
+      <!--android:textColor="#757575"-->
+      <!--android:layout_marginBottom="20sp"-->
+      <!--android:layout_gravity="center"-->
+      <!--android:layout_marginTop="20sp"/>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#eee"
         android:orientation="vertical">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200sp"
+            android:layout_height="100sp"
             android:src="@drawable/logo_dark2"
             android:layout_gravity="center"
             android:layout_marginTop="20sp"/>
@@ -30,18 +32,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30sp"
-            android:text="Connect with OPENSPOT
-    to see your bookings"
+            android:gravity="center"
+            android:text="Connect with OPENSPOT \nto see your bookings"
             android:layout_gravity="center"/>
         <Button
+            android:id="@+id/btnFb"
         android:layout_width="250sp"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_fbbutton"
         android:layout_gravity="center"
+            android:drawableLeft="@drawable/facebook"
+            android:paddingLeft="10sp"
         android:text="CONNECT WITH FACEBOOK"
         android:textColor="#fff"
         android:layout_marginTop="30sp"/>
         <Button
+            android:id="@+id/btnEmail"
             android:layout_width="250sp"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_btn_green"

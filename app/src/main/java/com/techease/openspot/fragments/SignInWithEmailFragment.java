@@ -10,16 +10,16 @@ import android.view.ViewGroup;
 
 import com.techease.openspot.R;
 
-
-public class ChooseSignUpMethodForBookingMethod extends Fragment {
+public class SignInWithEmailFragment extends Fragment {
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_choose_sign_up_method_for_booking_method, container, false);
+        View view= inflater.inflate(R.layout.fragment_sign_in_with_email2, container, false);
 
         return view;
     }
+
 }

@@ -1,5 +1,7 @@
 package com.techease.openspot.fragments;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -12,28 +14,39 @@ import android.widget.TextView;
 import com.techease.openspot.R;
 
 
-public class ProfileFragment extends Fragment {
+public class ChooseSignUpMethodForBooking extends Fragment {
 
-    Button btnSignOut;
-
+    TextView textView;
+    Button btnEmail,btnFb;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_profile, container, false);
+        View view= inflater.inflate(R.layout.fragment_choose_sign_up_method_for_booking_method, container, false);
 
-        customActionBar();
-        btnSignOut=(Button)view.findViewById(R.id.btnSignOut);
+        getActivity().setTitle("BOOKINGS");
+        //customActionBar();
+        btnEmail=(Button)view.findViewById(R.id.btnEmail);
+        btnFb=(Button)view.findViewById(R.id.btnFb);
 
-        btnSignOut.setOnClickListener(new View.OnClickListener() {
+
+        btnEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment=new ChooseSignUpMethodForBooking();
+                Fragment fragment=new SignUpWithEmailFragment();
+                getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
+            }
+        });
+        btnFb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment=new ProfileFragment();
                 getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
             }
         });
         return view;
     }
+
     public void customActionBar(){
         android.support.v7.app.ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);
@@ -42,7 +55,7 @@ public class ProfileFragment extends Fragment {
         LayoutInflater mInflater = LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.custom_actionabr, null);
         TextView textView=(TextView)mCustomView.findViewById(R.id.tvActoinBarTitle);
-        textView.setText("PROFILE");
+        textView.setText("BOOKING");
 
     }
 }
