@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    android:orientation="vertical"
+    tools:context="com.techease.openspot.fragments.LoginMethodForUserFavorite">
+
+ <ImageView
+     android:layout_width="200sp"
+     android:layout_height="100sp"
+     android:src="@drawable/logo_dark2"
+     android:layout_gravity="center"
+     android:layout_marginTop="20sp"
+     />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connect to OPENSPOT\n to make it favorite"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="10sp"
+        />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50sp"
+        android:layout_gravity="center">
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_buttonaFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp" />
+        <Button
+            android:id="@+id/btnFBFavorite"
+            android:layout_width="220sp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_fbbutton"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/facebook"
+            android:paddingLeft="10sp"
+            android:text="CONNECT WITH FACEBOOK"
+            android:textColor="#fff"
+            />
+    </FrameLayout>
+    <Button
+        android:id="@+id/btnEmailFavorite"
+        android:layout_width="220sp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_btn_green"
+        android:layout_gravity="center"
+        android:text="CONNECT WITH EMAIL"
+        android:textColor="#fff"
+        android:layout_marginBottom="70sp"
+        android:layout_marginTop="10sp"/>
+
+
+</LinearLayout>

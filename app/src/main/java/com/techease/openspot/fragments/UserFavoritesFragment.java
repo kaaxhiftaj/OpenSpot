@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -21,10 +20,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.techease.openspot.Adapters.UserBookingsAdapter;
+import com.techease.openspot.Adapters.UserFavoriteAdapter;
 import com.techease.openspot.R;
-import com.techease.openspot.controllers.AllGroundsModel;
 import com.techease.openspot.controllers.UserBookingsModel;
+import com.techease.openspot.controllers.UserFavoriteModel;
 import com.techease.openspot.utils.AlertsUtils;
 
 import org.json.JSONArray;
@@ -40,26 +39,27 @@ import java.util.Map;
 import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
 
 
-public class UserBookingFragment extends Fragment {
+public class UserFavoritesFragment extends Fragment {
+
+    ToggleSwitch toggleSwitch;
+    RecyclerView recyclerView;
+    List<UserFavoriteModel> list;
+    UserFavoriteAdapter adapter;
     android.support.v7.app.AlertDialog alertDialog;
+    String strUserId,strGroundId;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    String strUserId;
-    List<UserBookingsModel> list;
-    UserBookingsAdapter adapter;
-    RecyclerView recyclerView;
-    ToggleSwitch toggleSwitch;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_user_booking, container, false);
+        View view= inflater.inflate(R.layout.fragment_user_favorites, container, false);
 
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        toggleSwitch = (ToggleSwitch)view.findViewById(R.id.btnToggle);
-        recyclerView=(RecyclerView)view.findViewById(R.id.rvUserBooking);
         strUserId=sharedPreferences.getString("user_id","");
+        toggleSwitch = (ToggleSwitch)view.findViewById(R.id.btnToggleFavorite);
+        recyclerView=(RecyclerView)view.findViewById(R.id.rvFavorites);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         list=new ArrayList<>();
         if (alertDialog==null)
@@ -68,26 +68,17 @@ public class UserBookingFragment extends Fragment {
             alertDialog.show();
         }
         apicall();
-        adapter=new UserBookingsAdapter(getActivity(),list);
+        adapter=new UserFavoriteAdapter(getActivity(),list);
         recyclerView.setAdapter(adapter);
-
-
         toggleSwitch.setOnToggleSwitchChangeListener(new ToggleSwitch.OnToggleSwitchChangeListener(){
 
             @Override
             public void onToggleSwitchChangeListener(int position, boolean isChecked) {
-                Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
-               if(position==2)
-               {
-                Fragment fragment=new UserFavoritesFragment();
-                getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
-               }
-               else
-               if(position==1)
-               {
-                   Fragment fragment=new UserFavoritesFragment();
-                   getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
-               }
+                if(position==1)
+                {
+                    Fragment fragment=new UserBookingFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
+                }
             }
         });
         return view;
@@ -101,26 +92,23 @@ public class UserBookingFragment extends Fragment {
                     alertDialog.dismiss();
                 try {
                     JSONObject jsonObject=new JSONObject(response);
-                    JSONArray jsonArray=jsonObject.getJSONArray("data");
-                    for (int i=0; i<jsonArray.length(); i++)
+                    JSONArray jsonArray=jsonObject.getJSONArray("collection");
+                    for(int i=0; i<jsonArray.length(); i++)
                     {
                         JSONObject object=jsonArray.getJSONObject(i);
-                        UserBookingsModel model=new UserBookingsModel();
-                        model.setId(object.getString("booking_id"));
+                        UserFavoriteModel model=new UserFavoriteModel();
+                        model.setId(object.getString("id"));
                         model.setImage(object.getString("image"));
-                        model.setName(object.getString("name"));
-                        model.setLocation(object.getString("location"));
-                        model.setType(object.getString("type"));
                         model.setInformation(object.getString("information"));
+                        model.setLocation(object.getString("location"));
+                        model.setName(object.getString("name"));
+                        model.setType(object.getString("type"));
                         list.add(model);
                     }
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    if (alertDialog!=null)
-                        alertDialog.dismiss();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -161,5 +149,4 @@ public class UserBookingFragment extends Fragment {
         }
         return map;
     }
-
 }

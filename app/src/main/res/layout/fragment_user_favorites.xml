@@ -3,31 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:background="#eee"
     android:orientation="vertical"
-    tools:context="com.techease.openspot.fragments.UserBookingFragment">
-
+    android:background="#eee"
+    tools:context="com.techease.openspot.fragments.UserFavoritesFragment">
     <belka.us.androidtoggleswitch.widgets.ToggleSwitch
-        android:id="@+id/btnToggle"
+        android:id="@+id/btnToggleFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20sp"
         android:gravity="center"
         android:textSize="18sp"
-        custom:activeBgColor="@color/colorPrimary"
+        custom:activeBgColor="#BDBDBD"
         custom:activeTextColor="@android:color/white"
         custom:cornerRadius="20sp"
-        custom:inactiveBgColor="#BDBDBD"
+        custom:inactiveBgColor="@color/colorPrimary"
         custom:inactiveTextColor="@android:color/white"
         custom:textToggleLeft="BOOKING"
         custom:textToggleRight="FAVOURITE"
         custom:toggleWidth="125dp" />
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:id="@+id/rvUserBooking"></android.support.v7.widget.RecyclerView>
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/rvFavorites"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10sp"
+    android:layout_marginRight="10sp"
+    android:layout_marginLeft="10sp"
+    android:layout_marginBottom="50sp">
+</android.support.v7.widget.RecyclerView>
+
 </LinearLayout>

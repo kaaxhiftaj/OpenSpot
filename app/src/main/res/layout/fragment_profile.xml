@@ -13,169 +13,193 @@
     android:textSize="20sp"
     android:background="#fff"
     android:textStyle="bold"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
-        android:orientation="horizontal">
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_image"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:src="@drawable/logo"
-            />
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40sp"
-            android:layout_marginTop="20sp"
             android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="17sp"
-            android:text="Lula Doyle"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Trantowview    Maritius"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="walter.jermie@gmail.com"/>
-        </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50sp"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="ACCOUNT SETTINGS"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CHANGE"
-            android:layout_marginLeft="85sp"/>
-            <ImageView
-                android:layout_width="10sp"
-                android:layout_height="20sp"
-                android:layout_marginLeft="10sp"
-                android:src="@drawable/rightarrow"/>
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3sp"
-            android:layout_marginTop="20sp"
-            android:background="#9E9E9E"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="CHANGE PASSWORD"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CHANGE"
-                android:layout_marginLeft="90sp"/>
-            <ImageView
-                android:layout_width="10sp"
-                android:layout_height="20sp"
-                android:layout_marginLeft="10sp"
-                android:src="@drawable/rightarrow"/>
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3sp"
-            android:layout_marginTop="20sp"
-            android:background="#9E9E9E"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="17sp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="NOTIFICATION"/>
-            <Switch
-                android:layout_width="50sp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="130sp"
-                android:textColor="@color/colorPrimary"
-                android:theme="@style/SCBSwitch"
-                android:checked="true"/>
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:layout_marginTop="20sp"
+                android:orientation="horizontal">
 
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3sp"
-            android:background="#9E9E9E"
-            android:layout_marginTop="15sp"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:src="@drawable/logo" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40sp"
+                    android:layout_marginTop="20sp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lula Doyle"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Trantowview    Maritius" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="walter.jermie@gmail.com" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="CHANGE PASSWORD"/>
-            <TextView
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:layout_marginTop="50sp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="248dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:text="ACCOUNT SETTINGS"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="68dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"
+                        android:text="CHANGE" />
+
+                    <ImageView
+                        android:layout_width="10sp"
+                        android:layout_height="20sp"
+                        android:src="@drawable/rightarrow" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3sp"
+                    android:layout_marginTop="20sp"
+                    android:background="#9E9E9E" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20sp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="159dp"
+                        android:layout_height="wrap_content"
+                        android:text="CHANGE PASSWORD"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="67dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="90sp"
+                        android:text="CHANGE" />
+
+                    <ImageView
+                        android:layout_width="10sp"
+                        android:layout_height="20sp"
+                        android:src="@drawable/rightarrow" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3sp"
+                    android:layout_marginTop="20sp"
+                    android:background="#9E9E9E" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17sp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="137dp"
+                        android:layout_height="wrap_content"
+                        android:text="NOTIFICATION"
+                        android:textStyle="bold" />
+
+                    <Switch
+                        android:layout_width="50sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="130sp"
+                        android:checked="true"
+                        android:textColor="@color/colorPrimary"
+                        android:theme="@style/SCBSwitch" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3sp"
+                    android:layout_marginTop="15sp"
+                    android:background="#9E9E9E" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20sp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="159dp"
+                        android:layout_height="wrap_content"
+                        android:text="PRIVACY POLICY"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="69dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="90sp"
+                        android:text="CHANGE" />
+
+                    <ImageView
+                        android:layout_width="10sp"
+                        android:layout_height="20sp"
+                        android:src="@drawable/rightarrow" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3sp"
+                    android:layout_marginTop="20sp"
+                    android:background="#9E9E9E" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnSignOut"
+                android:layout_width="150sp"
                 android:layout_height="wrap_content"
-                android:text="CHANGE"
-                android:layout_marginLeft="90sp"/>
-            <ImageView
-                android:layout_width="10sp"
-                android:layout_height="20sp"
-                android:layout_marginLeft="10sp"
-                android:src="@drawable/rightarrow"/>
+                android:layout_gravity="center"
+                android:layout_marginBottom="70sp"
+                android:layout_marginTop="20sp"
+                android:background="@drawable/custom_btnred"
+                android:text="SIGN OUT"
+                android:textColor="#fff" />
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3sp"
-            android:layout_marginTop="20sp"
-            android:background="#9E9E9E"/>
-    </LinearLayout>
-    <Button
-        android:id="@+id/btnSignOut"
-        android:layout_width="150sp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_btnred"
-        android:layout_gravity="center"
-        android:text="SIGN OUT"
-        android:layout_marginBottom="70sp"
-        android:textColor="#fff"
-        android:layout_marginTop="20sp"/>
-    </LinearLayout>
     </ScrollView>
 </LinearLayout>

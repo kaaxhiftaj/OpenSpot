@@ -1,32 +1,25 @@
 package com.techease.openspot.ui.activities;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.SearchView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.anthonyfdev.dropdownview.DropDownView;
 import com.techease.openspot.R;
+import com.techease.openspot.fragments.ChooseLoginMethodForProfile;
 import com.techease.openspot.fragments.ChooseSignUpMethodForBooking;
 import com.techease.openspot.fragments.ListOfAllBooking;
 import com.techease.openspot.fragments.ProfileFragment;
+import com.techease.openspot.fragments.UserBookingFragment;
 
 public class BottomNavigationActivity extends AppCompatActivity {
 
-
+    String strFrom;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -42,8 +35,17 @@ public class BottomNavigationActivity extends AppCompatActivity {
                     getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment2).commit();
                     return true;
                 case R.id.profile:
-                    Fragment fragment3=new ProfileFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment3).commit();
+                    if (strFrom!=null)
+                    {
+                        Fragment fragment3=new ProfileFragment();
+                        getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment3).commit();
+                    }
+                    else
+                    {
+                        Fragment fragment1=new ChooseLoginMethodForProfile();
+                        getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment1).commit();
+                    }
+
                     return true;
             }
             return false;
@@ -60,12 +62,26 @@ public class BottomNavigationActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        Fragment fragment=new ListOfAllBooking();
-        getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
+        strFrom=getIntent().getExtras().getString("aaa");
+        if (strFrom!=null)
+        {
+            Fragment fragment=new UserBookingFragment();
+            getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
+        }
+        else
+        {
+            Fragment fragment=new ListOfAllBooking();
+            getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
+        }
 
-
-
-
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (android.support.v4.app.Fragment fragment : getSupportFragmentManager().getFragments()) {
+            //System.out.println("@#@");
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 }

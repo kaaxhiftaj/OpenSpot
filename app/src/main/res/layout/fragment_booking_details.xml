@@ -7,25 +7,32 @@
     tools:context="com.techease.openspot.fragments.BookingDetailsFragment">
 
 <android.support.v7.widget.RecyclerView
+    android:id="@+id/rvGroundDetailImage"
     android:layout_marginTop="10sp"
     android:layout_width="match_parent"
-    android:layout_height="200sp"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="10sp"
     android:layout_marginRight="10sp"
-    android:orientation="horizontal"
     >
 </android.support.v7.widget.RecyclerView>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10sp"
+    android:layout_marginTop="5sp"
     android:layout_marginLeft="10sp"
     android:layout_marginRight="10sp"
     android:background="#fff"
     android:orientation="horizontal">
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0sp"
+        android:layout_weight="0.5"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
@@ -33,6 +40,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
         <TextView
+            android:id="@+id/tvGroundDetailName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="QATAR CLUB"
@@ -61,10 +69,12 @@
                 android:layout_marginTop="10sp"
                 />
             <TextView
+                android:id="@+id/tvInfoGroundDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="outdoor football field"
                 android:textSize="10sp"
+                android:gravity="left"
                 android:layout_marginTop="10sp"
                 android:layout_marginLeft="5sp"/>
         </LinearLayout>
@@ -75,8 +85,10 @@
         android:layout_marginLeft="2sp"
         android:background="#eee"/>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0sp"
+        android:layout_weight="0.2"
         android:layout_height="wrap_content"
+        android:id="@+id/layoutFavourite"
         android:orientation="vertical">
         <ImageView
             android:layout_width="wrap_content"
@@ -101,7 +113,8 @@
         android:layout_marginLeft="2sp"
         android:background="#eee"/>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0sp"
+        android:layout_weight="0.2"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <ImageView
@@ -130,7 +143,8 @@
         android:layout_marginRight="10sp"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0sp"
+            android:layout_weight="0.7"
             android:layout_height="wrap_content"
             android:text="TODAY EVENING FOOTBALL"
             android:layout_gravity="center"
@@ -139,22 +153,27 @@
             />
         <Button
             android:id="@+id/btnChange"
-            android:layout_width="wrap_content"
-            android:layout_height="30sp"
+            android:layout_width="0sp"
+            android:layout_weight="0.3"
+            android:layout_height="35sp"
             android:layout_gravity="center"
             android:text="CHANGE"
             android:layout_marginTop="10sp"
             android:layout_marginBottom="10sp"
+            android:layout_marginRight="10sp"
             android:textColor="#fff"
-            android:layout_marginLeft="50sp"
             android:background="@drawable/custom_btn_green"
             />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvGroundDetailTimes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
+        android:layout_marginBottom="70sp"
         android:layout_marginTop="10sp"></android.support.v7.widget.RecyclerView>
+</LinearLayout>
+    </ScrollView>
 </LinearLayout>

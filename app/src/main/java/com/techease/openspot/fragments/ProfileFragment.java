@@ -1,5 +1,7 @@
 package com.techease.openspot.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +17,8 @@ import com.techease.openspot.R;
 public class ProfileFragment extends Fragment {
 
     Button btnSignOut;
-
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -23,6 +26,8 @@ public class ProfileFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
 
         customActionBar();
+        sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         btnSignOut=(Button)view.findViewById(R.id.btnSignOut);
 
         btnSignOut.setOnClickListener(new View.OnClickListener() {

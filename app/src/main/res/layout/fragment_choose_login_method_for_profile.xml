@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eee"
+    tools:context="com.techease.openspot.fragments.ChooseLoginMethodForProfile">
+
+    <ImageView
+        android:layout_width="200sp"
+        android:layout_height="100sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20sp"
+        android:src="@drawable/logo_dark2"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="10sp"
+        android:text="Connect with OPENSPOT\n to see your Profile"/>
+    <Button
+        android:id="@+id/btnFbProfile"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_fbbutton"
+        android:layout_gravity="center"
+        android:drawableLeft="@drawable/facebook"
+        android:paddingLeft="10sp"
+        android:text="CONNECT WITH FACEBOOK"
+        android:textColor="#fff"
+        android:layout_marginTop="30sp"/>
+    <Button
+        android:id="@+id/btnEmailProfile"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_btn_green"
+        android:layout_gravity="center"
+        android:text="CONNECT WITH EMAIL"
+        android:textColor="#fff"
+        android:layout_marginTop="20sp"/>
+</LinearLayout>
