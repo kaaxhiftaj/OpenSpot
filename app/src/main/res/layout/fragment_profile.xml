@@ -45,18 +45,20 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Lula Doyle"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Trantowview    Maritius" />
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="Trantowview    Maritius" />-->
 
                     <TextView
+                        android:id="@+id/tvEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="walter.jermie@gmail.com" />
@@ -105,10 +107,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20sp"
+                    android:id="@+id/llChangePass"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="159dp"
+                        android:layout_width="155dp"
                         android:layout_height="wrap_content"
                         android:text="CHANGE PASSWORD"
                         android:textStyle="bold" />

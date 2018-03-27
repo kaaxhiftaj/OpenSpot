@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,13 +29,17 @@ public class BookNowFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_book_now, container, false);
 
+        //hiding action bar
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
         strUserId=sharedPreferences.getString("user_id","");
         strPrice=sharedPreferences.getString("price","");
         strTime=sharedPreferences.getString("time","");
         strType=sharedPreferences.getString("type","");
         strGroundName=sharedPreferences.getString("name","");
+
         tvGroundName=(TextView)view.findViewById(R.id.tvGroundNameBookNow);
         tvPrice=(TextView)view.findViewById(R.id.tvPriceBookNow);
         tvTime=(TextView)view.findViewById(R.id.tvTimeBookNow);

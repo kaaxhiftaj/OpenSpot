@@ -6,17 +6,16 @@
     android:background="#fff"
     tools:context="com.techease.openspot.fragments.ChooseSignUpMethodForBooking">
 
-  <!--<TextView-->
-      <!--android:id="@+id/tvTitle"-->
-      <!--android:layout_width="wrap_content"-->
-      <!--android:layout_height="wrap_content"-->
-      <!--android:text="Booking"-->
-      <!--android:textStyle="bold"-->
-      <!--android:textSize="20sp"-->
-      <!--android:textColor="#757575"-->
-      <!--android:layout_marginBottom="20sp"-->
-      <!--android:layout_gravity="center"-->
-      <!--android:layout_marginTop="20sp"/>-->
+  <TextView
+      android:id="@+id/tvTitle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="BOOKING"
+      android:textStyle="bold"
+      android:textSize="20sp"
+      android:layout_marginBottom="25sp"
+      android:layout_gravity="center"
+      android:layout_marginTop="25sp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,17 +34,30 @@
             android:gravity="center"
             android:text="Connect with OPENSPOT \nto see your bookings"
             android:layout_gravity="center"/>
-        <Button
-            android:id="@+id/btnFb"
-        android:layout_width="250sp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_fbbutton"
-        android:layout_gravity="center"
-            android:drawableLeft="@drawable/facebook"
-            android:paddingLeft="10sp"
-        android:text="CONNECT WITH FACEBOOK"
-        android:textColor="#fff"
-        android:layout_marginTop="30sp"/>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50sp"
+            android:layout_gravity="center">
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/loginButtonBooking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp" />
+            <Button
+                android:id="@+id/btnFbBooking"
+                android:layout_width="220sp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_fbbutton"
+                android:layout_gravity="center"
+                android:drawableLeft="@drawable/facebook"
+                android:paddingLeft="10sp"
+                android:text="CONNECT WITH FACEBOOK"
+                android:textColor="#fff"
+                />
+        </FrameLayout>
         <Button
             android:id="@+id/btnEmail"
             android:layout_width="250sp"

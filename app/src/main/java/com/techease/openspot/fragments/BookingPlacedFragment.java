@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,10 +40,8 @@ public class BookingPlacedFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_booking_placed, container, false);
 
-
-
-
-
+        //hiding action bar
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         return view;
     }
 

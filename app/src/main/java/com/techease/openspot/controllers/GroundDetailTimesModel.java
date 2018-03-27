@@ -6,7 +6,21 @@ package com.techease.openspot.controllers;
 
 public class GroundDetailTimesModel {
 
-    String timeId,timeFrom,timeTo,price,type;
+    String timeId;
+    String timeFrom;
+    String timeTo;
+    String price;
+    String type;
+
+    public String getIsBooked() {
+        return IsBooked;
+    }
+
+    public void setIsBooked(String isBooked) {
+        IsBooked = isBooked;
+    }
+
+    String IsBooked;
 
 
     public String getTimeId() {

@@ -5,12 +5,14 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -55,6 +57,8 @@ public class UserFavoritesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_user_favorites, container, false);
 
+        //hiding action bar
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         strUserId=sharedPreferences.getString("user_id","");
@@ -74,7 +78,7 @@ public class UserFavoritesFragment extends Fragment {
 
             @Override
             public void onToggleSwitchChangeListener(int position, boolean isChecked) {
-                if(position==1)
+                if(position==0)
                 {
                     Fragment fragment=new UserBookingFragment();
                     getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
@@ -85,7 +89,7 @@ public class UserFavoritesFragment extends Fragment {
     }
 
     private void apicall() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://openspot.qa/openspot/userBookings", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://openspot.qa/openspot/userFavorites", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (alertDialog!=null)
@@ -104,6 +108,7 @@ public class UserFavoritesFragment extends Fragment {
                         model.setName(object.getString("name"));
                         model.setType(object.getString("type"));
                         list.add(model);
+
                     }
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
@@ -127,8 +132,7 @@ public class UserFavoritesFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id",strUserId);
-                params.put("Accept", "application/json");
-                return checkParams(params);
+                return params;
             }
         };
 

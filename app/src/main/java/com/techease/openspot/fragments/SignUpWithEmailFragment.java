@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,8 @@ public class SignUpWithEmailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_sign_up_with_email, container, false);
 
+        //hiding action bar
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         etEmail=(EditText)view.findViewById(R.id.etEmail);
@@ -101,18 +104,19 @@ public class SignUpWithEmailFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://openspot.qa/openspot/register", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (alertDialog!=null)
-                    alertDialog.dismiss();
                 try {
                     JSONObject jsonObject=new JSONObject(response);
                     JSONObject object=jsonObject.getJSONObject("user");
                     String name=object.getString("name");
                     String id=object.getString("id");
                     String email=object.getString("email");
+                    editor.putString("name",name).commit();
                     editor.putString("token","login").commit();
-
+                    editor.putString("email",email).commit();
                     editor.putString("user_id",id).commit();
-                    Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
+
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     if (alertDialog!=null)

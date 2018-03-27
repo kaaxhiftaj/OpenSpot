@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,16 +46,17 @@ import java.util.Map;
 
 public class BookingDetailsFragment extends Fragment {
 
-    Button btnChange;
+    Button btnChange,btnFindSpot;
+    ImageView ivClose;
     String groundName,groundId,groundInfo;
-    TextView tvName,tvInfo;
+    TextView tvName,tvInfo,tvLocation;
     List<GroundDetailTimesModel> timesModels;
     GroundDetailTimesAdapter timesAdapter;
     RecyclerView recyclerViewImage,recyclerViewTimes;
     List<GroundDetailImgeModel> list;
     GroundDetailImageAdapter adapter;
     android.support.v7.app.AlertDialog alertDialog;
-    LinearLayout linearLayoutFavorite;
+    LinearLayout linearLayoutFavorite,linearLayoutFilter;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String token,UserId;
@@ -64,17 +66,22 @@ public class BookingDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_booking_details, container, false);
 
-        customActionBar();
+        //hiding action bar
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        ivClose=(ImageView)view.findViewById(R.id.ivCloseBookingDetail);
+        btnFindSpot=(Button)view.findViewById(R.id.findSpotBookingDetail);
         token=sharedPreferences.getString("token","");
         UserId=sharedPreferences.getString("user_id","");
         tvName=(TextView)view.findViewById(R.id.tvGroundDetailName);
         tvInfo=(TextView)view.findViewById(R.id.tvInfoGroundDetail);
         btnChange=(Button)view.findViewById(R.id.btnChange);
+        tvLocation=(TextView)view.findViewById(R.id.tvLocation);
         recyclerViewImage=(RecyclerView)view.findViewById(R.id.rvGroundDetailImage);
         recyclerViewTimes=(RecyclerView)view.findViewById(R.id.rvGroundDetailTimes);
         linearLayoutFavorite=(LinearLayout)view.findViewById(R.id.layoutFavourite);
+        linearLayoutFilter=(LinearLayout)view.findViewById(R.id.bottomViewBookingDetail);
 
         groundName=getArguments().getString("groundName");
         groundId=getArguments().getString("groundId");
@@ -101,8 +108,13 @@ public class BookingDetailsFragment extends Fragment {
         btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment=new BookingInformationFragment();
-                getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
+             linearLayoutFilter.setVisibility(View.VISIBLE);
+            }
+        });
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linearLayoutFilter.setVisibility(View.GONE);
             }
         });
 
@@ -130,7 +142,16 @@ public class BookingDetailsFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 Log.d("ZmaGroundDetail", response);
-                Toast.makeText(getActivity(), "Added to Favorite", Toast.LENGTH_SHORT).show();
+
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+                    String respo=jsonObject.getString("message");
+                   // JSONObject object=jsonObject.getJSONObject("message");
+                    Toast.makeText(getActivity(), respo, Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
 
         }, new Response.ErrorListener() {
@@ -190,9 +211,11 @@ public class BookingDetailsFragment extends Fragment {
                         model1.setTimeTo(jsonObject1.getString("time_to"));
                         model1.setPrice(jsonObject1.getString("price"));
                         model1.setTimeFrom(jsonObject1.getString("time_from"));
+                        model1.setIsBooked(jsonObject1.getString("is_booked"));
                         timesModels.add(model1);
                         timesAdapter.notifyDataSetChanged();
                     }
+                    timesAdapter.notifyDataSetChanged();
                     if (alertDialog!=null)
                         alertDialog.dismiss();
                 } catch (JSONException e) {
@@ -232,15 +255,4 @@ public class BookingDetailsFragment extends Fragment {
         mRequestQueue.add(stringRequest);
     }
 
-    public void customActionBar(){
-        android.support.v7.app.ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        mActionBar.setDisplayShowHomeEnabled(false);
-        mActionBar.setDisplayShowTitleEnabled(false);
-        mActionBar.setDisplayHomeAsUpEnabled(true);
-        LayoutInflater mInflater = LayoutInflater.from(getActivity());
-        View mCustomView = mInflater.inflate(R.layout.custom_actionabr, null);
-        TextView textView=(TextView)mCustomView.findViewById(R.id.tvActoinBarTitle);
-        textView.setText(" ");
-
-    }
 }

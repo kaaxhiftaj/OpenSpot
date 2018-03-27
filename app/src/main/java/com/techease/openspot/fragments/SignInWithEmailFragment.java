@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,8 @@ public class SignInWithEmailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_sign_in_with_email2, container, false);
 
+        //hiding action bar
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         etEmail=(EditText)view.findViewById(R.id.etEmailSignIn);
@@ -98,7 +101,11 @@ public class SignInWithEmailFragment extends Fragment {
                     JSONObject jsonObject=new JSONObject(response);
                     JSONObject object=jsonObject.getJSONObject("user");
                     String id=object.getString("id");
+                    String email=object.getString("email");
+                    String name=object.getString("name");
                     editor.putString("token","login").commit();
+                    editor.putString("name",name).commit();
+                    editor.putString("email",email).commit();
                     editor.putString("user_id",id).commit();
                     if (alertDialog!=null)
                         alertDialog.dismiss();

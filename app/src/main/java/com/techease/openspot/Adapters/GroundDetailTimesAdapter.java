@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.techease.openspot.R;
 import com.techease.openspot.controllers.GroundDetailTimesModel;
 import com.techease.openspot.fragments.BookNowFragment;
-import com.techease.openspot.fragments.BookingDetailsFragment;
 import com.techease.openspot.fragments.BookingInformationFragment;
 
 import java.util.List;
@@ -75,6 +74,48 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
 
             }
         });
+        String isBooked=model.getIsBooked();
+//        if(!isBooked.equals("true"))
+//        {
+//            holder.tvTime.setText(model.getTimeTo());
+//            holder.tvPrice.setText(model.getPrice());
+//            holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    String token=holder.sharedPreferences.getString("token","");
+//                    if (!token.equals(""))
+//                    {
+//                        holder.editor.putString("time_id",model.getTimeId()).commit();
+//                        holder.editor.putString("price",model.getPrice()).commit();
+//                        holder.editor.putString("time",model.getTimeFrom()+" TO "+model.getTimeTo()).commit();
+//                        Fragment fragment=new BookNowFragment();
+//                        ((AppCompatActivity)context).getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
+//                    }
+//                    else
+//                    {
+//                        holder.editor.putString("time_id",model.getTimeId()).commit();
+//                        holder.editor.putString("price",model.getPrice()).commit();
+//                        holder.editor.putString("time",model.getTimeFrom()+" TO "+model.getTimeTo()).commit();
+//                        Fragment fragment=new BookingInformationFragment();
+//                        String timeId=model.getTimeId();
+//                        String time=model.getTimeFrom()+" TO "+model.getTimeTo();
+//                        String price=model.getPrice();
+//                        Bundle bundle=new Bundle();
+//                        bundle.putString("timeId",timeId);
+//                        bundle.putString("time",time);
+//                        bundle.putString("price",price);
+//                        fragment.setArguments(bundle);
+//                        ((AppCompatActivity)context).getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
+//                    }
+//
+//                }
+//            });
+//        }
+//        else
+//        {
+//            holder.linearLayout.setVisibility(View.GONE);
+//        }
+
     }
 
     @Override

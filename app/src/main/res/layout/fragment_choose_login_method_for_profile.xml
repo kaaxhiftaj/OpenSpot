@@ -20,17 +20,30 @@
         android:gravity="center"
         android:layout_marginTop="10sp"
         android:text="Connect with OPENSPOT\n to see your Profile"/>
-    <Button
-        android:id="@+id/btnFbProfile"
-        android:layout_width="250sp"
+    <FrameLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_fbbutton"
-        android:layout_gravity="center"
-        android:drawableLeft="@drawable/facebook"
-        android:paddingLeft="10sp"
-        android:text="CONNECT WITH FACEBOOK"
-        android:textColor="#fff"
-        android:layout_marginTop="30sp"/>
+        android:layout_marginTop="20sp"
+        android:layout_gravity="center">
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btnLoginProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp" />
+        <Button
+            android:id="@+id/btnFbProfile"
+            android:layout_width="220sp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_fbbutton"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/facebook"
+            android:paddingLeft="10sp"
+            android:text="CONNECT WITH FACEBOOK"
+            android:textColor="#fff"
+            />
+    </FrameLayout>
     <Button
         android:id="@+id/btnEmailProfile"
         android:layout_width="250sp"

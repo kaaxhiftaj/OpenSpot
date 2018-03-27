@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -55,6 +56,8 @@ public class UserBookingFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_user_booking, container, false);
 
+        //hiding action bar
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         toggleSwitch = (ToggleSwitch)view.findViewById(R.id.btnToggle);
@@ -76,7 +79,6 @@ public class UserBookingFragment extends Fragment {
 
             @Override
             public void onToggleSwitchChangeListener(int position, boolean isChecked) {
-                Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
                if(position==2)
                {
                 Fragment fragment=new UserFavoritesFragment();

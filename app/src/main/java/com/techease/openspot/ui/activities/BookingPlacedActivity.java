@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -48,6 +49,7 @@ public class BookingPlacedActivity extends AppCompatActivity {
         time_id=sharedPreferences.getString("time_id","");
         strPrice=sharedPreferences.getString("price","");
 
+        Toast.makeText(this, strUserId+" " +strPrice, Toast.LENGTH_SHORT).show();
         tvDate=(TextView)findViewById(R.id.tvDate);
         tvDuration=(TextView)findViewById(R.id.tvDuration);
         tvPrice=(TextView)findViewById(R.id.tvPriceBooked);

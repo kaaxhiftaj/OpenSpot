@@ -2,6 +2,8 @@ package com.techease.openspot.fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -12,12 +14,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -46,59 +52,186 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
-public class ListOfAllBooking extends Fragment {
-    SearchView searchView;
-    RecyclerView daysRecycler,groundsRecycler;
+
+public class ListOfAllBooking extends Fragment implements View.OnClickListener {
+    EditText searchView;
+    Button btnFindspot;
+    ImageView ivClose;
+    TextView tvTimeMorning, tvTimeNoon, tvTimeEvening, btnDuration30, btnDuration60, btnDuration90, btnSportFootball, btnSportBasketBall, btnSportCricket;
+    RecyclerView daysRecycler, groundsRecycler;
     DateAndTimeAdapter recyclerViewAdapter;
     LinearLayout linearLayoutSpot;
     List<AllGroundsModel> list;
     AllGroundsAdapter allGroundsAdapter;
     android.support.v7.app.AlertDialog alertDialog;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    String filterDate, filterSport, filterDuration, filterTimeTo, filterTimeFrom;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_of_all_booking, container, false);
 
-        //customActionBar();
-        daysRecycler=(RecyclerView)view.findViewById(R.id.dayslistview);
-        linearLayoutSpot=(LinearLayout)view.findViewById(R.id.bottomView);
-        searchView=(SearchView)view.findViewById(R.id.searchView);
-        groundsRecycler=(RecyclerView)view.findViewById(R.id.rvAllBookings);
-        groundsRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        list=new ArrayList<>();
+        //hiding action bar
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
+        daysRecycler = (RecyclerView) view.findViewById(R.id.dayslistview);
+        linearLayoutSpot = (LinearLayout) view.findViewById(R.id.bottomView);
+        searchView = (EditText) view.findViewById(R.id.searchView);
+        groundsRecycler = (RecyclerView) view.findViewById(R.id.rvAllBookings);
+        ivClose = (ImageView) view.findViewById(R.id.ivClose);
+        btnFindspot = (Button) view.findViewById(R.id.findSpot);
+        tvTimeEvening = (TextView) view.findViewById(R.id.tvTime3);
+        tvTimeMorning = (TextView) view.findViewById(R.id.tvTime1);
+        tvTimeNoon = (TextView) view.findViewById(R.id.tvTime2);
+        btnDuration30 = (TextView) view.findViewById(R.id.btnDuration1);
+        btnDuration60 = (TextView) view.findViewById(R.id.btnDuration2);
+        btnDuration90 = (TextView) view.findViewById(R.id.btnDuration3);
+        btnSportFootball = (TextView) view.findViewById(R.id.btnSports1);
+        btnSportBasketBall = (TextView) view.findViewById(R.id.btnSports2);
+        btnSportCricket = (TextView) view.findViewById(R.id.btnSports3);
+
+        tvTimeNoon.setOnClickListener(this);
+        tvTimeMorning.setOnClickListener(this);
+        tvTimeEvening.setOnClickListener(this);
+        btnSportCricket.setOnClickListener(this);
+        btnSportBasketBall.setOnClickListener(this);
+        btnSportFootball.setOnClickListener(this);
+        btnDuration30.setOnClickListener(this);
+        btnDuration60.setOnClickListener(this);
+        btnDuration90.setOnClickListener(this);
+
+        groundsRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        list = new ArrayList<>();
+
+        //get 7 days date
         SimpleDateFormat curFormater = new SimpleDateFormat("MMM dd");
         GregorianCalendar date = new GregorianCalendar();
         String[] dateStringArray = new String[7];
-        date.set(GregorianCalendar.DATE, date.get(GregorianCalendar.DATE)-date.get(GregorianCalendar.MONTH));
-        for (int day = 1; day < 7; day++) {
+        date.set(GregorianCalendar.DATE, date.get(GregorianCalendar.DATE) - date.get(GregorianCalendar.MONTH));
+        for (int day = 0; day < 7; day++) {
             dateStringArray[day] = curFormater.format(date.getTime());
             date.roll(Calendar.DAY_OF_MONTH, true);
         }
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         daysRecycler.setLayoutManager(linearLayoutManager);
-        recyclerViewAdapter = new DateAndTimeAdapter(dateStringArray);
+        recyclerViewAdapter = new DateAndTimeAdapter(getActivity(),dateStringArray);
         daysRecycler.setAdapter(recyclerViewAdapter);
+        filterDate=sharedPreferences.getString("filterDate","");
 
-        if (alertDialog==null)
-        {
-            alertDialog= AlertsUtils.createProgressDialog(getActivity());
+
+
+        if (alertDialog == null) {
+            alertDialog = AlertsUtils.createProgressDialog(getActivity());
             alertDialog.show();
         }
+        //calling api for retriving list of grounds
         apicall();
-        allGroundsAdapter=new AllGroundsAdapter(getActivity(),list);
+        allGroundsAdapter = new AllGroundsAdapter(getActivity(), list);
         groundsRecycler.setAdapter(allGroundsAdapter);
+
 
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            linearLayoutSpot.setVisibility(View.VISIBLE);
+                linearLayoutSpot.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linearLayoutSpot.setVisibility(View.GONE);
+            }
+        });
+
+
+        btnFindspot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (alertDialog == null) {
+                    alertDialog = AlertsUtils.createProgressDialog(getActivity());
+                    alertDialog.show();
+                }
+                apiCallForSearch();
+                linearLayoutSpot.setVisibility(View.GONE);
             }
         });
 
         return view;
+    }
+
+    private void apiCallForSearch() {
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://openspot.qa/openspot/filterGround"
+                , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("ZmaGrounds", response);
+                JSONObject jsonObject= null;
+                try {
+                    jsonObject = new JSONObject(response);
+                    JSONArray jsonArray=jsonObject.getJSONArray("data");
+                    for(int i=0; i<jsonArray.length(); i++)
+                    {
+                        JSONObject object=jsonArray.getJSONObject(i);
+                        AllGroundsModel model=new AllGroundsModel();
+                        model.setId(object.getString("id"));
+                        model.setName(object.getString("name"));
+                        model.setLocation(object.getString("location"));
+                        model.setType(object.getString("type"));
+                        model.setImage(object.getString("image"));
+                        model.setInformation(object.getString("information"));
+                        list.add(model);
+                    }
+                    if (alertDialog != null)
+                        alertDialog.dismiss();
+                    allGroundsAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (alertDialog != null)
+                    alertDialog.dismiss();
+
+                Log.d("error", String.valueOf(error.getCause()));
+
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded;charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("date",filterDate);
+                params.put("time_from",filterTimeFrom);
+                params.put("time_to",filterTimeTo);
+                params.put("duration",filterDuration);
+                params.put("sport",filterSport);
+                return params;
+            }
+
+        };
+        RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        mRequestQueue.add(stringRequest);
     }
 
     private void apicall() {
@@ -109,12 +242,11 @@ public class ListOfAllBooking extends Fragment {
                 Log.d("ZmaGrounds", response);
                 try {
                     list.clear();
-                    JSONObject jsonObject=new JSONObject(response);
-                    JSONArray jsonArr=jsonObject.getJSONArray("data");
-                    for (int i=0; i<jsonArr.length(); i++)
-                    {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArr = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < jsonArr.length(); i++) {
                         JSONObject temp = jsonArr.getJSONObject(i);
-                        AllGroundsModel model=new AllGroundsModel();
+                        AllGroundsModel model = new AllGroundsModel();
                         model.setId(temp.getString("id"));
                         model.setImage(temp.getString("image"));
                         model.setName(temp.getString("name"));
@@ -124,13 +256,13 @@ public class ListOfAllBooking extends Fragment {
                         list.add(model);
 
                     }
-                    if (alertDialog!=null)
+                    if (alertDialog != null)
                         alertDialog.dismiss();
                     allGroundsAdapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    if (alertDialog!=null)
+                    if (alertDialog != null)
                         alertDialog.dismiss();
 
                 }
@@ -139,10 +271,10 @@ public class ListOfAllBooking extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (alertDialog!=null)
+                if (alertDialog != null)
                     alertDialog.dismiss();
 
-                Log.d("error" , String.valueOf(error.getCause()));
+                Log.d("error", String.valueOf(error.getCause()));
 
             }
         }) {
@@ -165,15 +297,105 @@ public class ListOfAllBooking extends Fragment {
         mRequestQueue.add(stringRequest);
     }
 
-    public void customActionBar(){
-    android.support.v7.app.ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        mActionBar.setDisplayShowHomeEnabled(false);
-        mActionBar.setDisplayShowTitleEnabled(false);
-        mActionBar.setDisplayHomeAsUpEnabled(true);
-    LayoutInflater mInflater = LayoutInflater.from(getActivity());
-    View mCustomView = mInflater.inflate(R.layout.custom_actionabr, null);
-        TextView textView=(TextView)mCustomView.findViewById(R.id.tvActoinBarTitle);
-        textView.setText(" ");
+    @Override
+    public void onResume() {
+        super.onResume();
+        apicall();
+        allGroundsAdapter = new AllGroundsAdapter(getActivity(), list);
+        groundsRecycler.setAdapter(allGroundsAdapter);
 
-}
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.tvTime1:
+                tvTimeMorning.setBackgroundResource(R.drawable.custom_rounded_shape);
+                tvTimeEvening.setBackgroundResource(0);
+                tvTimeNoon.setBackgroundResource(0);
+                tvTimeMorning.setTextColor(Color.WHITE);
+                tvTimeNoon.setTextColor(Color.GRAY);
+                tvTimeEvening.setTextColor(Color.GRAY);
+                filterTimeTo = "7AM";
+                filterTimeFrom = "11AM";
+                break;
+            case R.id.tvTime2:
+                tvTimeNoon.setBackgroundResource(R.drawable.custom_rounded_shape);
+                tvTimeEvening.setBackgroundResource(0);
+                tvTimeMorning.setBackgroundResource(0);
+                tvTimeNoon.setTextColor(Color.WHITE);
+                tvTimeMorning.setTextColor(Color.GRAY);
+                tvTimeEvening.setTextColor(Color.GRAY);
+                filterTimeTo = "7AM";
+                filterTimeFrom = "5PM";
+                break;
+            case R.id.tvTime3:
+                tvTimeEvening.setBackgroundResource(R.drawable.custom_rounded_shape);
+                tvTimeEvening.setTextColor(Color.WHITE);
+                tvTimeNoon.setTextColor(Color.GRAY);
+                tvTimeMorning.setTextColor(Color.GRAY);
+                tvTimeNoon.setBackgroundResource(0);
+                tvTimeMorning.setBackgroundResource(0);
+                filterTimeTo = "7AM";
+                filterTimeFrom = "5PM";
+                break;
+            case R.id.btnSports1:
+                btnSportFootball.setBackgroundResource(R.drawable.custom_rounded_shape);
+                btnSportFootball.setTextColor(Color.WHITE);
+                btnSportBasketBall.setTextColor(Color.GRAY);
+                btnSportCricket.setTextColor(Color.GRAY);
+                btnSportBasketBall.setBackgroundResource(0);
+                btnSportCricket.setBackgroundResource(0);
+                filterSport = "Football";
+                break;
+            case R.id.btnSports2:
+                btnSportBasketBall.setBackgroundResource(R.drawable.custom_rounded_shape);
+                btnSportBasketBall.setTextColor(Color.WHITE);
+                btnSportFootball.setTextColor(Color.GRAY);
+                btnSportCricket.setTextColor(Color.GRAY);
+                btnSportFootball.setBackgroundResource(0);
+                btnSportCricket.setBackgroundResource(0);
+                filterSport = "BasketBall";
+                break;
+            case R.id.btnSports3:
+                btnSportCricket.setBackgroundResource(R.drawable.custom_rounded_shape);
+                btnSportCricket.setTextColor(Color.WHITE);
+                btnSportBasketBall.setTextColor(Color.GRAY);
+                btnSportFootball.setTextColor(Color.GRAY);
+                btnSportBasketBall.setBackgroundResource(0);
+                btnSportFootball.setBackgroundResource(0);
+                filterSport = "Cricket";
+                break;
+            case R.id.btnDuration1:
+                btnDuration30.setBackgroundResource(R.drawable.custom_rounded_shape);
+                btnDuration30.setTextColor(Color.WHITE);
+                btnDuration90.setTextColor(Color.GRAY);
+                btnDuration60.setTextColor(Color.GRAY);
+                btnDuration60.setBackgroundResource(0);
+                btnDuration90.setBackgroundResource(0);
+                filterDuration = "30";
+                break;
+            case R.id.btnDuration2:
+                btnDuration60.setBackgroundResource(R.drawable.custom_rounded_shape);
+                btnDuration60.setTextColor(Color.WHITE);
+                btnDuration90.setTextColor(Color.GRAY);
+                btnDuration30.setTextColor(Color.GRAY);
+                btnDuration30.setBackgroundResource(0);
+                btnDuration90.setBackgroundResource(0);
+                filterDuration = "60";
+                break;
+            case R.id.btnDuration3:
+                btnDuration90.setBackgroundResource(R.drawable.custom_rounded_shape);
+                btnDuration90.setTextColor(Color.WHITE);
+                btnDuration30.setTextColor(Color.GRAY);
+                btnDuration60.setTextColor(Color.GRAY);
+                btnDuration60.setBackgroundResource(0);
+                btnDuration30.setBackgroundResource(0);
+                filterDuration = "90";
+                break;
+            default:
+                break;
+        }
+    }
 }
