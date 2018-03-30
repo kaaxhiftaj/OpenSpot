@@ -49,7 +49,7 @@ public class BookingPlacedActivity extends AppCompatActivity {
         time_id=sharedPreferences.getString("time_id","");
         strPrice=sharedPreferences.getString("price","");
 
-        Toast.makeText(this, strUserId+" " +strPrice, Toast.LENGTH_SHORT).show();
+
         tvDate=(TextView)findViewById(R.id.tvDate);
         tvDuration=(TextView)findViewById(R.id.tvDuration);
         tvPrice=(TextView)findViewById(R.id.tvPriceBooked);

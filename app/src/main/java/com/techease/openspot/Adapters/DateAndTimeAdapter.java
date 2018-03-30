@@ -37,7 +37,6 @@ public class DateAndTimeAdapter extends RecyclerView.Adapter<DateAndTimeAdapter.
             @Override
             public void onClick(View v) {
                 String getDate=names[position];
-                Toast.makeText(context, getDate, Toast.LENGTH_SHORT).show();
                 holder.editor.putString("filterDate",getDate).commit();
 
             }

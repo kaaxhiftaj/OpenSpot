@@ -189,7 +189,7 @@ public class BookingDetailsFragment extends Fragment {
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("ZmaGroundDetail", response);
+                Log.d("zma timedetail", response);
                 try {
                     JSONObject jsonObject=new JSONObject(response);
                     JSONArray getJson=jsonObject.getJSONArray("images");
@@ -207,13 +207,12 @@ public class BookingDetailsFragment extends Fragment {
                         Log.d("zmaTimes",String.valueOf(jsonArray));
                         JSONObject jsonObject1=jsonArray.getJSONObject(i);
                         GroundDetailTimesModel model1=new GroundDetailTimesModel();
-                        model1.setTimeId(jsonObject1.getString("time_id"));
+                        model1.setTimeId(jsonObject1.getInt("time_id"));
                         model1.setTimeTo(jsonObject1.getString("time_to"));
                         model1.setPrice(jsonObject1.getString("price"));
                         model1.setTimeFrom(jsonObject1.getString("time_from"));
                         model1.setIsBooked(jsonObject1.getString("is_booked"));
                         timesModels.add(model1);
-                        timesAdapter.notifyDataSetChanged();
                     }
                     timesAdapter.notifyDataSetChanged();
                     if (alertDialog!=null)

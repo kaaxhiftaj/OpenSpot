@@ -27,6 +27,8 @@ import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import com.techease.openspot.R;
 import com.techease.openspot.ui.activities.BottomNavigationActivity;
+import com.techease.openspot.ui.activities.FullscreenActivity;
+import com.techease.openspot.ui.activities.SplashActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,9 +67,22 @@ public class ChooseLoginMethodForProfile extends Fragment {
 
                 loginButton.performClick();
                 ((BottomNavigationActivity) getActivity()).facebook();
-                strEmail=sharedPreferences.getString("email","");
-                fullName=sharedPreferences.getString("name","");
-                apicall();
+
+                Thread timer = new Thread() {
+                    public void run() {
+                        try {
+                            sleep(3000);
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } finally {
+                            Fragment fragment=new ProfileFragment();
+                            getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
+                        }
+                    }
+                };
+                timer.start();
+
 
             }
 
@@ -81,60 +96,7 @@ public class ChooseLoginMethodForProfile extends Fragment {
         });
         return view;
     }
-    private void apicall() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://openspot.qa/openspot/sociallogin", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
 
-                    JSONObject jsonObject=new JSONObject(response);
-                    JSONObject object=jsonObject.getJSONObject("user");
-                    String userId=object.getString("id");
-                    String name=object.getString("name");
-                    Toast.makeText(getActivity(), "Logged in as "+name, Toast.LENGTH_SHORT).show();
-                    String email=object.getString("email");
-                    editor.putString("name",name).commit();
-                    editor.putString("user_id",userId).commit();
-                    editor.putString("token","login").commit();
-                    editor.putString("email",email).commit();
-                    Fragment fragment=new ProfileFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("zma error", String.valueOf(error.getCause()));
-            }
-        }) {
-            @Override
-            public String getBodyContentType() {
-                return "application/x-www-form-urlencoded;charset=UTF-8";
-            }
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("name",fullName);
-                params.put("email",strEmail);
-                params.put("provider","facebook");
-                return params;
-            }
-        };
-
-        RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
-        stringRequest.setRetryPolicy(new
-                DefaultRetryPolicy(200000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        mRequestQueue.add(stringRequest);
-
-    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

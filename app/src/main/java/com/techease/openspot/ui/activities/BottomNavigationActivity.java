@@ -14,6 +14,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -34,6 +42,8 @@ import org.json.JSONObject;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BottomNavigationActivity extends AppCompatActivity {
 
@@ -53,7 +63,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
                     getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
                     return true;
                 case R.id.booking:
-                    if (token!=null)
+                    if (!token.equals(""))
                     {
                         Fragment fragment2=new UserBookingFragment();
                         getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment2).addToBackStack("abc").commit();
@@ -66,7 +76,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
 
                     return true;
                 case R.id.profile:
-                    if (token!=null)
+                    if (!token.equals(""))
                     {
                         Fragment fragment3=new ProfileFragment();
                         getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment3).commit();
@@ -90,13 +100,14 @@ public class BottomNavigationActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_bottom_navigation);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         sharedPreferences = this.getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         token=sharedPreferences.getString("token","");
         strFrom=getIntent().getExtras().getString("aaa");
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         if (strFrom!=null)
         {
             Fragment fragment=new UserBookingFragment();
@@ -195,11 +206,65 @@ public class BottomNavigationActivity extends AppCompatActivity {
             if (object.has("location"))
                 bundle.putString("location", object.getJSONObject("location").getString("name"));
 
+            apicall();
             return bundle;
         }
         catch(JSONException e) {
             Log.d("Error","Error parsing JSON");
         }
         return null;
+    }
+    private void apicall() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://openspot.qa/openspot/sociallogin", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("zmaProfile",response);
+                try {
+
+                    JSONObject jsonObject=new JSONObject(response);
+                    JSONObject object=jsonObject.getJSONObject("user");
+                    String userId=object.getString("id");
+                    String name=object.getString("name");
+                    Toast.makeText(BottomNavigationActivity.this, "Logged in as "+name, Toast.LENGTH_SHORT).show();
+                    String email=object.getString("email");
+                    editor.putString("name",name).commit();
+                    editor.putString("user_id",userId).commit();
+                    editor.putString("token","login").commit();
+                    editor.putString("email",email).commit();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("zma error", String.valueOf(error.getCause()));
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded;charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("name",fullname);
+                params.put("email",strEmail);
+                params.put("provider","facebook");
+                return params;
+            }
+        };
+
+        RequestQueue mRequestQueue = Volley.newRequestQueue(this);
+        stringRequest.setRetryPolicy(new
+                DefaultRetryPolicy(200000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        mRequestQueue.add(stringRequest);
+
     }
 }

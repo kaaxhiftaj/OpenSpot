@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,13 +44,14 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
         final GroundDetailTimesModel model=models.get(position);
         holder.tvTime.setText(model.getTimeTo());
         holder.tvPrice.setText(model.getPrice());
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        Toast.makeText(context,String.valueOf(model.getTimeTo()), Toast.LENGTH_SHORT).show();
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String token=holder.sharedPreferences.getString("token","");
                 if (!token.equals(""))
                 {
-                    holder.editor.putString("time_id",model.getTimeId()).commit();
+                    holder.editor.putInt("time_id",model.getTimeId()).commit();
                     holder.editor.putString("price",model.getPrice()).commit();
                     holder.editor.putString("time",model.getTimeFrom()+" TO "+model.getTimeTo()).commit();
                     Fragment fragment=new BookNowFragment();
@@ -57,15 +59,15 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
                 }
                 else
                 {
-                    holder.editor.putString("time_id",model.getTimeId()).commit();
+                    holder.editor.putInt("time_id",model.getTimeId()).commit();
                     holder.editor.putString("price",model.getPrice()).commit();
                     holder.editor.putString("time",model.getTimeFrom()+" TO "+model.getTimeTo()).commit();
                     Fragment fragment=new BookingInformationFragment();
-                    String timeId=model.getTimeId();
+                    int timeId=model.getTimeId();
                     String time=model.getTimeFrom()+" TO "+model.getTimeTo();
                     String price=model.getPrice();
                     Bundle bundle=new Bundle();
-                    bundle.putString("timeId",timeId);
+                    bundle.putInt("timeId",timeId);
                     bundle.putString("time",time);
                     bundle.putString("price",price);
                     fragment.setArguments(bundle);
@@ -74,48 +76,6 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
 
             }
         });
-        String isBooked=model.getIsBooked();
-//        if(!isBooked.equals("true"))
-//        {
-//            holder.tvTime.setText(model.getTimeTo());
-//            holder.tvPrice.setText(model.getPrice());
-//            holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    String token=holder.sharedPreferences.getString("token","");
-//                    if (!token.equals(""))
-//                    {
-//                        holder.editor.putString("time_id",model.getTimeId()).commit();
-//                        holder.editor.putString("price",model.getPrice()).commit();
-//                        holder.editor.putString("time",model.getTimeFrom()+" TO "+model.getTimeTo()).commit();
-//                        Fragment fragment=new BookNowFragment();
-//                        ((AppCompatActivity)context).getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
-//                    }
-//                    else
-//                    {
-//                        holder.editor.putString("time_id",model.getTimeId()).commit();
-//                        holder.editor.putString("price",model.getPrice()).commit();
-//                        holder.editor.putString("time",model.getTimeFrom()+" TO "+model.getTimeTo()).commit();
-//                        Fragment fragment=new BookingInformationFragment();
-//                        String timeId=model.getTimeId();
-//                        String time=model.getTimeFrom()+" TO "+model.getTimeTo();
-//                        String price=model.getPrice();
-//                        Bundle bundle=new Bundle();
-//                        bundle.putString("timeId",timeId);
-//                        bundle.putString("time",time);
-//                        bundle.putString("price",price);
-//                        fragment.setArguments(bundle);
-//                        ((AppCompatActivity)context).getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
-//                    }
-//
-//                }
-//            });
-//        }
-//        else
-//        {
-//            holder.linearLayout.setVisibility(View.GONE);
-//        }
-
     }
 
     @Override
@@ -125,7 +85,7 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTime,tvPrice;
-        LinearLayout linearLayout;
+        RelativeLayout relativeLayout;
         SharedPreferences sharedPreferences;
         SharedPreferences.Editor editor;
         public ViewHolder(View itemView) {
@@ -135,7 +95,7 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
             editor = sharedPreferences.edit();
             tvTime=(TextView)itemView.findViewById(R.id.tvTime);
             tvPrice=(TextView)itemView.findViewById(R.id.tvPrice);
-            linearLayout=(LinearLayout)itemView.findViewById(R.id.linearLayoutTimeAndPrice);
+            relativeLayout=(RelativeLayout) itemView.findViewById(R.id.linearLayoutTimeAndPrice);
         }
     }
 }

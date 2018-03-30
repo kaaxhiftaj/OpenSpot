@@ -72,7 +72,7 @@ public class ProfileFragment extends Fragment {
                 editor.putString("token","").commit();
                 editor.putString("email","").commit();
                 editor.putString("image","").commit();
-                Fragment fragment=new ChooseSignUpMethodForBooking();
+                Fragment fragment=new ChooseLoginMethodForProfile();
                 getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
             }
         });

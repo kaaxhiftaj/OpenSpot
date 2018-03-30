@@ -168,7 +168,7 @@
         </FrameLayout>
         <Button
             android:id="@+id/btnEmailBookingInfo"
-            android:layout_width="220sp"
+            android:layout_width="210sp"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_btn_green"
             android:layout_gravity="center"

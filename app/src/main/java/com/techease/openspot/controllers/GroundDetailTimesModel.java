@@ -6,11 +6,13 @@ package com.techease.openspot.controllers;
 
 public class GroundDetailTimesModel {
 
-    String timeId;
+    int timeId;
     String timeFrom;
     String timeTo;
     String price;
     String type;
+    String IsBooked;
+
 
     public String getIsBooked() {
         return IsBooked;
@@ -20,14 +22,12 @@ public class GroundDetailTimesModel {
         IsBooked = isBooked;
     }
 
-    String IsBooked;
 
+    public int getTimeId() {
+        return timeId;
+    }
 
-    public String getTimeId() {
-    return timeId;
-}
-
-    public void setTimeId(String timeId) {
+    public void setTimeId(int timeId) {
         this.timeId = timeId;
     }
 

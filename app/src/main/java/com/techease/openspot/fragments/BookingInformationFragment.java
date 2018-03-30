@@ -56,7 +56,8 @@ public class BookingInformationFragment extends Fragment {
 
     Button btnEmail,btnFb;
     TextView tvConnect,tvPrice,tvType,tvTime,tvName;
-    String type,time,timeId,price,groundName,strEmail,fullName;
+    String type,time,price,groundName,strEmail,fullName;
+    int timeId;
     String provider;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -76,7 +77,7 @@ public class BookingInformationFragment extends Fragment {
         type=sharedPreferences.getString("type","");
         groundName=sharedPreferences.getString("groundName","");
         time=getArguments().getString("time");
-        timeId=getArguments().getString("timeId");
+        timeId=getArguments().getInt("timeId");
         price=getArguments().getString("price");
         tvName=(TextView)view.findViewById(R.id.tvGroundNameBookingInfo);
         tvPrice=(TextView)view.findViewById(R.id.tvPriceBookingInfo);
@@ -104,7 +105,20 @@ public class BookingInformationFragment extends Fragment {
                 ((BottomNavigationActivity) getActivity()).facebook();
                 strEmail=sharedPreferences.getString("email","");
                 fullName=sharedPreferences.getString("name","");
-                apicall();
+                Thread timer = new Thread() {
+                    public void run() {
+                        try {
+                            sleep(3000);
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } finally {
+                            Fragment fragment=new BookNowFragment();
+                            getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
+                        }
+                    }
+                };
+                timer.start();
             }
 
         });
@@ -120,77 +134,6 @@ public class BookingInformationFragment extends Fragment {
         return view;
     }
 
-    private void apicall() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://openspot.qa/openspot/sociallogin", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if (alertDialog!=null)
-                    alertDialog.dismiss();
-                try {
-
-                    JSONObject jsonObject=new JSONObject(response);
-                    JSONObject object=jsonObject.getJSONObject("user");
-                    String userId=object.getString("id");
-                    String name=object.getString("name");
-                    String email=object.getString("email");
-                    editor.putString("name",name).commit();
-                    editor.putString("user_id",userId).commit();
-                    editor.putString("token","login").commit();
-                    Fragment fragment=new BookNowFragment();
-                    Toast.makeText(getActivity(), "sucess", Toast.LENGTH_SHORT).show();
-                    editor.putString("time",tvTime.getText().toString()).commit();
-                    editor.putString("type",tvType.getText().toString()).commit();
-                    editor.putString("price",tvPrice.getText().toString()).commit();
-                    editor.putString("name",tvName.getText().toString()).commit();
-                    getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (alertDialog!=null)
-                    alertDialog.dismiss();
-                Log.d("zma error", String.valueOf(error.getCause()));
-            }
-        }) {
-            @Override
-            public String getBodyContentType() {
-                return "application/x-www-form-urlencoded;charset=UTF-8";
-            }
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("name",fullName);
-                params.put("email",strEmail);
-                params.put("provider",provider);
-                params.put("Accept", "application/json");
-                return checkParams(params);
-            }
-        };
-
-        RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
-        stringRequest.setRetryPolicy(new
-                DefaultRetryPolicy(200000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        mRequestQueue.add(stringRequest);
-    }
-    private Map<String, String> checkParams(Map<String, String> map){
-        Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, String> pairs = (Map.Entry<String, String>)it.next();
-            if(pairs.getValue()==null){
-                map.put(pairs.getKey(), "");
-            }
-        }
-        return map;
-    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

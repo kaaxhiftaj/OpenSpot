@@ -66,7 +66,21 @@ public class LoginMethodForUserFavorite extends Fragment {
                 ((BottomNavigationActivity) getActivity()).facebook();
                 strEmail=sharedPreferences.getString("email","");
                 fullName=sharedPreferences.getString("name","");
-                apicall();
+                Thread timer = new Thread() {
+                    public void run() {
+                        try {
+                            sleep(3000);
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } finally {
+                            Fragment fragment=new UserFavoritesFragment();
+                            getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
+                        }
+                    }
+                };
+                timer.start();
+                //apicall();
             }
 
         });

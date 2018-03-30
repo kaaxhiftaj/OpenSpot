@@ -67,7 +67,21 @@ public class ChooseSignUpMethodForBooking extends Fragment {
                 ((BottomNavigationActivity) getActivity()).facebook();
                 strEmail=sharedPreferences.getString("email","");
                 fullName=sharedPreferences.getString("name","");
-                apicall();
+                Thread timer = new Thread() {
+                    public void run() {
+                        try {
+                            sleep(3000);
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } finally {
+                            Fragment fragment=new UserBookingFragment();
+                            getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
+                        }
+                    }
+                };
+                timer.start();
+               // apicall();
             }
 
         });
@@ -97,7 +111,6 @@ public class ChooseSignUpMethodForBooking extends Fragment {
                     editor.putString("token","login").commit();
                     editor.putString("email",email).commit();
                     Fragment fragment=new UserBookingFragment();
-                    Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
                     getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
                 } catch (JSONException e) {
                     e.printStackTrace();
