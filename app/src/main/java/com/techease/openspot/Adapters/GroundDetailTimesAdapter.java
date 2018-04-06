@@ -44,7 +44,6 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
         final GroundDetailTimesModel model=models.get(position);
         holder.tvTime.setText(model.getTimeTo());
         holder.tvPrice.setText(model.getPrice());
-        Toast.makeText(context,String.valueOf(model.getTimeTo()), Toast.LENGTH_SHORT).show();
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +84,7 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTime,tvPrice;
-        RelativeLayout relativeLayout;
+        LinearLayout relativeLayout;
         SharedPreferences sharedPreferences;
         SharedPreferences.Editor editor;
         public ViewHolder(View itemView) {
@@ -95,7 +94,7 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
             editor = sharedPreferences.edit();
             tvTime=(TextView)itemView.findViewById(R.id.tvTime);
             tvPrice=(TextView)itemView.findViewById(R.id.tvPrice);
-            relativeLayout=(RelativeLayout) itemView.findViewById(R.id.linearLayoutTimeAndPrice);
+            relativeLayout=(LinearLayout) itemView.findViewById(R.id.linearLayoutTimeAndPrice);
         }
     }
 }

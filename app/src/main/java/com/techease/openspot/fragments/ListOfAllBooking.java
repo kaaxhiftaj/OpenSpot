@@ -175,9 +175,9 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(String response) {
                 Log.d("ZmaGrounds", response);
-                JSONObject jsonObject= null;
+
                 try {
-                    jsonObject = new JSONObject(response);
+                  JSONObject  jsonObject = new JSONObject(response);
                     JSONArray jsonArray=jsonObject.getJSONArray("data");
                     for(int i=0; i<jsonArray.length(); i++)
                     {
@@ -224,6 +224,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 params.put("time_to",filterTimeTo);
                 params.put("duration",filterDuration);
                 params.put("sport",filterSport);
+                Log.d("zmaParm",params.toString());
                 return params;
             }
 
@@ -306,6 +307,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
         groundsRecycler.setAdapter(allGroundsAdapter);
 
     }
+
 
     @Override
     public void onClick(View v) {
