@@ -6,29 +6,55 @@
     android:background="#eee"
     android:orientation="vertical"
     tools:context="com.techease.openspot.fragments.UserBookingFragment">
-
-    <belka.us.androidtoggleswitch.widgets.ToggleSwitch
-        android:id="@+id/btnToggle"
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="100sp"
+    android:background="#fff"
+    android:orientation="vertical">
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="BOOKINGS"
+        android:textSize="20sp"
         android:layout_gravity="center"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="40sp"/>
+</LinearLayout>
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/gray_round_togglebtn"
+    android:orientation="horizontal"
+    android:layout_marginTop="15sp"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="45sp"
+        android:text="BOOKINGS"
+        android:textColor="#fff"
+        android:paddingLeft="15sp"
+        android:paddingRight="15sp"
+        android:background="@drawable/green_round_togglebtn"
         android:gravity="center"
-        android:textSize="18sp"
-        custom:activeBgColor="@color/colorPrimary"
-        custom:activeTextColor="@android:color/white"
-        custom:cornerRadius="20sp"
-        custom:inactiveBgColor="#BDBDBD"
-        custom:inactiveTextColor="@android:color/white"
-        custom:textToggleLeft="BOOKING"
-        custom:textToggleRight="FAVOURITE"
-        custom:toggleWidth="125dp" />
+        android:textSize="15sp"
+        />
+    <TextView
+        android:id="@+id/btnFavourite"
+        android:layout_width="wrap_content"
+        android:layout_height="45sp"
+        android:gravity="center"
+        android:paddingRight="15sp"
+        android:textColor="#fff"
+        android:paddingLeft="15sp"
+        android:text="FAVOURITE"/>
+</LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10sp"
+        android:layout_marginTop="15sp"
         android:layout_marginBottom="50sp"
         android:id="@+id/rvUserBooking"></android.support.v7.widget.RecyclerView>
 </LinearLayout>

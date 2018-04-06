@@ -59,7 +59,8 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
     EditText searchView;
     Button btnFindspot;
     ImageView ivClose;
-    TextView tvTimeMorning, tvTimeNoon, tvTimeEvening, btnDuration30, btnDuration60, btnDuration90, btnSportFootball, btnSportBasketBall, btnSportCricket;
+    TextView btnDuration30,btnDuration60, btnDuration90, btnSportFootball, btnSportBasketBall, btnSportCricket,
+    tvTime1,tvTime2,tvTime3;
     RecyclerView daysRecycler, groundsRecycler;
     DateAndTimeAdapter recyclerViewAdapter;
     LinearLayout linearLayoutSpot;
@@ -87,9 +88,9 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
         groundsRecycler = (RecyclerView) view.findViewById(R.id.rvAllBookings);
         ivClose = (ImageView) view.findViewById(R.id.ivClose);
         btnFindspot = (Button) view.findViewById(R.id.findSpot);
-        tvTimeEvening = (TextView) view.findViewById(R.id.tvTime3);
-        tvTimeMorning = (TextView) view.findViewById(R.id.tvTime1);
-        tvTimeNoon = (TextView) view.findViewById(R.id.tvTime2);
+        tvTime1 = (TextView) view.findViewById(R.id.tvTime1);
+        tvTime2 = (TextView) view.findViewById(R.id.tvTime2);
+        tvTime3 = (TextView) view.findViewById(R.id.tvTime3);
         btnDuration30 = (TextView) view.findViewById(R.id.btnDuration1);
         btnDuration60 = (TextView) view.findViewById(R.id.btnDuration2);
         btnDuration90 = (TextView) view.findViewById(R.id.btnDuration3);
@@ -97,9 +98,9 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
         btnSportBasketBall = (TextView) view.findViewById(R.id.btnSports2);
         btnSportCricket = (TextView) view.findViewById(R.id.btnSports3);
 
-        tvTimeNoon.setOnClickListener(this);
-        tvTimeMorning.setOnClickListener(this);
-        tvTimeEvening.setOnClickListener(this);
+        tvTime1.setOnClickListener(this);
+        tvTime2.setOnClickListener(this);
+        tvTime3.setOnClickListener(this);
         btnSportCricket.setOnClickListener(this);
         btnSportBasketBall.setOnClickListener(this);
         btnSportFootball.setOnClickListener(this);
@@ -311,33 +312,34 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
         int id = v.getId();
         switch (id) {
             case R.id.tvTime1:
-                tvTimeMorning.setBackgroundResource(R.drawable.custom_rounded_shape);
-                tvTimeEvening.setBackgroundResource(0);
-                tvTimeNoon.setBackgroundResource(0);
-                tvTimeMorning.setTextColor(Color.WHITE);
-                tvTimeNoon.setTextColor(Color.GRAY);
-                tvTimeEvening.setTextColor(Color.GRAY);
+                tvTime1.setBackgroundResource(R.drawable.custom_rounded_shape);
+                tvTime2.setBackgroundResource(0);
+                tvTime3.setBackgroundResource(0);
+                tvTime1.setTextColor(Color.WHITE);
+                tvTime2.setTextColor(Color.GRAY);
+                tvTime3.setTextColor(Color.GRAY);
                 filterTimeTo = "7AM";
                 filterTimeFrom = "11AM";
                 break;
             case R.id.tvTime2:
-                tvTimeNoon.setBackgroundResource(R.drawable.custom_rounded_shape);
-                tvTimeEvening.setBackgroundResource(0);
-                tvTimeMorning.setBackgroundResource(0);
-                tvTimeNoon.setTextColor(Color.WHITE);
-                tvTimeMorning.setTextColor(Color.GRAY);
-                tvTimeEvening.setTextColor(Color.GRAY);
-                filterTimeTo = "7AM";
-                filterTimeFrom = "5PM";
+                tvTime2.setBackgroundResource(R.drawable.custom_rounded_shape);
+                tvTime1.setBackgroundResource(0);
+                tvTime3.setBackgroundResource(0);
+                tvTime2.setTextColor(Color.WHITE);
+                tvTime1.setTextColor(Color.GRAY);
+                tvTime3.setTextColor(Color.GRAY);
+                filterTimeTo = "12AM";
+                filterTimeFrom = "2AM";
                 break;
             case R.id.tvTime3:
-                tvTimeEvening.setBackgroundResource(R.drawable.custom_rounded_shape);
-                tvTimeEvening.setTextColor(Color.WHITE);
-                tvTimeNoon.setTextColor(Color.GRAY);
-                tvTimeMorning.setTextColor(Color.GRAY);
-                tvTimeNoon.setBackgroundResource(0);
-                tvTimeMorning.setBackgroundResource(0);
-                filterTimeTo = "7AM";
+                Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
+                tvTime3.setBackgroundResource(R.drawable.custom_rounded_shape);
+                tvTime1.setBackgroundResource(0);
+                tvTime2.setBackgroundResource(0);
+                tvTime3.setTextColor(Color.WHITE);
+                tvTime2.setTextColor(Color.GRAY);
+                tvTime1.setTextColor(Color.GRAY);
+                filterTimeTo = "3PM";
                 filterTimeFrom = "5PM";
                 break;
             case R.id.btnSports1:

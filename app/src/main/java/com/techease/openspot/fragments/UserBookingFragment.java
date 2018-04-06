@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -49,7 +51,8 @@ public class UserBookingFragment extends Fragment {
     List<UserBookingsModel> list;
     UserBookingsAdapter adapter;
     RecyclerView recyclerView;
-    ToggleSwitch toggleSwitch;
+    TextView btnFavourtie;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,7 +63,7 @@ public class UserBookingFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        toggleSwitch = (ToggleSwitch)view.findViewById(R.id.btnToggle);
+        btnFavourtie=(TextView) view.findViewById(R.id.btnFavourite);
         recyclerView=(RecyclerView)view.findViewById(R.id.rvUserBooking);
         strUserId=sharedPreferences.getString("user_id","");
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -74,22 +77,11 @@ public class UserBookingFragment extends Fragment {
         adapter=new UserBookingsAdapter(getActivity(),list);
         recyclerView.setAdapter(adapter);
 
-
-        toggleSwitch.setOnToggleSwitchChangeListener(new ToggleSwitch.OnToggleSwitchChangeListener(){
-
+        btnFavourtie.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onToggleSwitchChangeListener(int position, boolean isChecked) {
-               if(position==2)
-               {
+            public void onClick(View v) {
                 Fragment fragment=new UserFavoritesFragment();
-                getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
-               }
-               else
-               if(position==1)
-               {
-                   Fragment fragment=new UserFavoritesFragment();
-                   getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
-               }
+               getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
             }
         });
         return view;

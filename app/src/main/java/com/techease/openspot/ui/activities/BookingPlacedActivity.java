@@ -33,7 +33,8 @@ import java.util.Map;
 public class BookingPlacedActivity extends AppCompatActivity {
     TextView tvName,tvDuration,tvTime,tvDate,tvPrice;
     Button btnDone;
-    String groundId,strUserId,strPrice,time_id;
+    String groundId,strUserId,strPrice;
+    int time_id;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     android.support.v7.app.AlertDialog alertDialog;
@@ -46,7 +47,7 @@ public class BookingPlacedActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
         strUserId=sharedPreferences.getString("user_id","");
         groundId=sharedPreferences.getString("ground_id","");
-        time_id=sharedPreferences.getString("time_id","");
+        time_id=sharedPreferences.getInt("time_id",1);
         strPrice=sharedPreferences.getString("price","");
 
 
@@ -118,7 +119,7 @@ public class BookingPlacedActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("ground_id",groundId);
                 params.put("user_id",strUserId);
-                params.put("time_id",time_id);
+                params.put("time_id", String.valueOf(time_id));
                 params.put("price",strPrice);
                 return params;
             }

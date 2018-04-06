@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -43,7 +44,8 @@ import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
 
 public class UserFavoritesFragment extends Fragment {
 
-    ToggleSwitch toggleSwitch;
+  //  ToggleSwitch toggleSwitch;
+    TextView btnBooking;
     RecyclerView recyclerView;
     List<UserFavoriteModel> list;
     UserFavoriteAdapter adapter;
@@ -62,7 +64,7 @@ public class UserFavoritesFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         strUserId=sharedPreferences.getString("user_id","");
-        toggleSwitch = (ToggleSwitch)view.findViewById(R.id.btnToggleFavorite);
+        btnBooking=(TextView)view.findViewById(R.id.btnBooking);
         recyclerView=(RecyclerView)view.findViewById(R.id.rvFavorites);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         list=new ArrayList<>();
@@ -74,17 +76,14 @@ public class UserFavoritesFragment extends Fragment {
         apicall();
         adapter=new UserFavoriteAdapter(getActivity(),list);
         recyclerView.setAdapter(adapter);
-        toggleSwitch.setOnToggleSwitchChangeListener(new ToggleSwitch.OnToggleSwitchChangeListener(){
-
+        btnBooking.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onToggleSwitchChangeListener(int position, boolean isChecked) {
-                if(position==0)
-                {
-                    Fragment fragment=new UserBookingFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
-                }
+            public void onClick(View v) {
+                Fragment fragment=new UserBookingFragment();
+                getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
             }
         });
+
         return view;
     }
 
