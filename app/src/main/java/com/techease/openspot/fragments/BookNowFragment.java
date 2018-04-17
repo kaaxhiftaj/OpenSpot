@@ -19,6 +19,7 @@ import com.techease.openspot.ui.activities.BookingPlacedActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class BookNowFragment extends Fragment {
 
@@ -28,8 +29,6 @@ public class BookNowFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     ArrayList<String> timeArray=new ArrayList<String>();
-    ArrayList<String> priceArr=new ArrayList<String>();
-    int sum=0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,13 +55,7 @@ public class BookNowFragment extends Fragment {
         tvType.setText(strType);
         timeArray=GroundDetailTimesAdapter.timeArray;
         tvTime.setText(timeArray.toString().replace("[","").replace("]","").replace(","," "));
-        priceArr=GroundDetailTimesAdapter.priceArray;
-        List<Integer> priceArray=new ArrayList<Integer>(priceArr.size());
-        for (String myInt:priceArr)
-        {
-            priceArray.add(Integer.valueOf(myInt));
-        }
-        tvPrice.setText(String.valueOf(priceArray).replace("[","").replace("]","").replace(",",""));
+        tvPrice.setText(String.valueOf(GroundDetailTimesAdapter.price));
         tvGroundName.setText(strGroundName);
 
         btnBookNow.setOnClickListener(new View.OnClickListener() {

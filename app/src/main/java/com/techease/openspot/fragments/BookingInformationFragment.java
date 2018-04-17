@@ -36,6 +36,7 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.techease.openspot.Adapters.GroundDetailTimesAdapter;
 import com.techease.openspot.R;
 import com.techease.openspot.ui.activities.BottomNavigationActivity;
 
@@ -44,6 +45,7 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -64,6 +66,7 @@ public class BookingInformationFragment extends Fragment {
     LoginButton loginButton;
     CallbackManager callbackManager;
     android.support.v7.app.AlertDialog alertDialog;
+    ArrayList<String> timeArray=new ArrayList<String>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,10 +92,11 @@ public class BookingInformationFragment extends Fragment {
         tvConnect=(TextView)view.findViewById(R.id.tvConnect);
         loginButton = (LoginButton)view.findViewById(R.id.login_button);
 
+        timeArray= GroundDetailTimesAdapter.timeArray;
 
         tvType.setText(type);
-        tvPrice.setText(price);
-        tvTime.setText(time);
+        tvPrice.setText(String.valueOf(GroundDetailTimesAdapter.price));
+        tvTime.setText(timeArray.toString().replace("[","").replace("]","").replace(","," "));
         tvName.setText(groundName);
 
         provider = "facebook";

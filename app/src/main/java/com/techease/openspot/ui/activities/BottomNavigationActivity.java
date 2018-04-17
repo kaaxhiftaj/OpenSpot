@@ -96,8 +96,9 @@ public class BottomNavigationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       requestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ((AppCompatActivity) this).getSupportActionBar().hide();
         setContentView(R.layout.activity_bottom_navigation);
 
         sharedPreferences = this.getSharedPreferences("abc", Context.MODE_PRIVATE);

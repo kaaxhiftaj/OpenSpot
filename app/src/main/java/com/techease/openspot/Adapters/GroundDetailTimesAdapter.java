@@ -30,8 +30,9 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
     Context context;
     List<GroundDetailTimesModel> models;
     public static  ArrayList<String> timeArray = new ArrayList<String>();
+    public static int price;
+    public static  ArrayList<Integer> timeIdArray = new ArrayList<Integer>();
     public static ArrayList<String> priceArray=new ArrayList<String>();
-
     public GroundDetailTimesAdapter(Context context, List<GroundDetailTimesModel> timesModels) {
         this.context=context;
         this.models=timesModels;
@@ -47,12 +48,17 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
         final GroundDetailTimesModel model=models.get(position);
         holder.tvTime.setText(model.getTimeTo());
         holder.tvPrice.setText(model.getPrice());
+        timeArray.clear();
+        timeIdArray.clear();
+        priceArray.clear();
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
                 {
                     timeArray.add(model.getTimeTo());
+                    timeIdArray.add(model.getTimeId());
+                    price +=Integer.parseInt(model.getPrice());
                     priceArray.add(model.getPrice());
                     holder.editor.putInt("time_id",model.getTimeId()).commit();
                     holder.editor.putString("price",model.getPrice()).commit();

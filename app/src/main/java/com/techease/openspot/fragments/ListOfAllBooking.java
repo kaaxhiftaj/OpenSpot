@@ -47,6 +47,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -69,7 +70,8 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    String filterDate, filterSport, filterDuration, filterTimeTo, filterTimeFrom;
+    SimpleDateFormat year;
+    String filterDate, filterSport, filterDuration, filterTimeTo, filterTimeFrom,formatYear;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -111,8 +113,18 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
         groundsRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         list = new ArrayList<>();
 
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-mmm-yyyy");
+        String formattedDate = df.format(c);
+        editor.putString("date",formattedDate).commit();
+       // Toast.makeText(getActivity(), formattedDate, Toast.LENGTH_SHORT).show();
         //get 7 days date
         SimpleDateFormat curFormater = new SimpleDateFormat("MMM dd");
+         year = new SimpleDateFormat("yyyy");
+         formatYear=year.format(c);
+        Toast.makeText(getActivity(), String.valueOf(formatYear), Toast.LENGTH_SHORT).show();
         GregorianCalendar date = new GregorianCalendar();
         String[] dateStringArray = new String[7];
         date.set(GregorianCalendar.DATE, date.get(GregorianCalendar.DATE) - date.get(GregorianCalendar.MONTH));
@@ -219,7 +231,8 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("date",filterDate);
+                params.put("date",filterDate+"/"+formatYear);
+                editor.putString("date",filterDate+"/"+String.valueOf(year)).commit();
                 params.put("time_from",filterTimeFrom);
                 params.put("time_to",filterTimeTo);
                 params.put("duration",filterDuration);

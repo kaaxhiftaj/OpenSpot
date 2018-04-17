@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.techease.openspot.Adapters.GroundDetailTimesAdapter;
 import com.techease.openspot.R;
 import com.techease.openspot.fragments.UserBookingFragment;
 import com.techease.openspot.utils.AlertsUtils;
@@ -27,20 +30,26 @@ import com.techease.openspot.utils.AlertsUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BookingPlacedActivity extends AppCompatActivity {
     TextView tvName,tvDuration,tvTime,tvDate,tvPrice;
     Button btnDone;
-    String groundId,strUserId,strPrice;
+    String groundId,strUserId,strPrice,date;
     int time_id;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     android.support.v7.app.AlertDialog alertDialog;
+    ArrayList<Integer> timeIdArray=new ArrayList<Integer>();
+    ArrayList<String> priceArray=new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ((AppCompatActivity) this).getSupportActionBar().hide();
         setContentView(R.layout.activity_booking_placed);
 
         sharedPreferences = this.getSharedPreferences("abc", Context.MODE_PRIVATE);
@@ -49,8 +58,8 @@ public class BookingPlacedActivity extends AppCompatActivity {
         groundId=sharedPreferences.getString("ground_id","");
         time_id=sharedPreferences.getInt("time_id",1);
         strPrice=sharedPreferences.getString("price","");
-
-
+        date=sharedPreferences.getString("date","");
+        Toast.makeText(BookingPlacedActivity.this, date, Toast.LENGTH_SHORT).show();
         tvDate=(TextView)findViewById(R.id.tvDate);
         tvDuration=(TextView)findViewById(R.id.tvDuration);
         tvPrice=(TextView)findViewById(R.id.tvPriceBooked);
@@ -62,10 +71,10 @@ public class BookingPlacedActivity extends AppCompatActivity {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent=new Intent(BookingPlacedActivity.this,BottomNavigationActivity.class);
                 intent.putExtra("aaa","true");
                 startActivity(intent);
-
             }
         });
         if (alertDialog==null)
@@ -73,10 +82,21 @@ public class BookingPlacedActivity extends AppCompatActivity {
             alertDialog= AlertsUtils.createProgressDialog(this);
             alertDialog.show();
         }
-        Toast.makeText(this, strUserId, Toast.LENGTH_SHORT).show();
-        apicall();
+
+        timeIdArray= GroundDetailTimesAdapter.timeIdArray;
+        priceArray=GroundDetailTimesAdapter.priceArray;
+
+        for(int i=0; i<timeIdArray.size(); i++)
+        {
+            timeIdArray.get(i).toString().replace("[","").replace("]","").replace(",", " ");
+            priceArray.get(i).replace("[","").replace("]","").replace(",", " ");
+            apicall(timeIdArray.get(i),priceArray.get(i));
+        }
+
     }
-    private void apicall() {
+    private void apicall(Integer integer, String s) {
+        Toast.makeText(this,"price "+ s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"timeId "+ String.valueOf(integer), Toast.LENGTH_SHORT).show();
         final StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://openspot.qa/openspot/bookground"
                 , new Response.Listener<String>() {
             @Override
@@ -105,11 +125,11 @@ public class BookingPlacedActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 if (alertDialog!=null)
                     alertDialog.dismiss();
-
                 Log.d("error" , String.valueOf(error.getCause()));
 
             }
-        }) {
+        })
+        {
             @Override
             public String getBodyContentType() {
                 return "application/x-www-form-urlencoded;charset=UTF-8";
@@ -120,12 +140,12 @@ public class BookingPlacedActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("ground_id",groundId);
                 params.put("user_id",strUserId);
-                params.put("time_id", String.valueOf(time_id));
-                params.put("price",strPrice);
-                params.put("date","1/2/2018");
+                params.put("time_id", String.valueOf(integer));
+                params.put("price",s);
+                params.put("date",date);
+
                 return params;
             }
-
         };
         RequestQueue mRequestQueue = Volley.newRequestQueue(this);
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000,

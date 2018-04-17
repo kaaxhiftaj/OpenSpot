@@ -38,7 +38,6 @@ public class DateAndTimeAdapter extends RecyclerView.Adapter<DateAndTimeAdapter.
             public void onClick(View v) {
                 String getDate=names[position];
                 holder.editor.putString("filterDate",getDate).commit();
-
             }
         });
     }

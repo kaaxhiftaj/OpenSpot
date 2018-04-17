@@ -2,6 +2,7 @@ package com.techease.openspot.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -26,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.techease.openspot.Adapters.DateAndTimeAdapter;
 import com.techease.openspot.Adapters.GroundDetailImageAdapter;
 import com.techease.openspot.Adapters.GroundDetailTimesAdapter;
 import com.techease.openspot.R;
@@ -38,19 +40,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
-public class BookingDetailsFragment extends Fragment {
+public class BookingDetailsFragment extends Fragment implements View.OnClickListener {
 
     Button btnChange,btnFindSpot;
-   public static Button btnBookNow;
+    public static Button btnBookNow;
     ImageView ivClose;
     String groundName,groundId,groundInfo;
     TextView tvName,tvInfo,tvLocation;
+    TextView btnDuration30,btnDuration60, btnDuration90, btnSportFootball, btnSportBasketBall, btnSportCricket,
+            tvTime1,tvTime2,tvTime3;
     List<GroundDetailTimesModel> timesModels;
     GroundDetailTimesAdapter timesAdapter;
     RecyclerView recyclerViewImage,recyclerViewTimes;
@@ -61,7 +68,10 @@ public class BookingDetailsFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String token,UserId;
-    String sortTime;
+    RecyclerView recyclerViewDate;
+    DateAndTimeAdapter recyclerViewAdapter;
+    SimpleDateFormat year;
+    String filterDate,filterSport, filterDuration, filterTimeTo, filterTimeFrom;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,6 +82,7 @@ public class BookingDetailsFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        recyclerViewDate = (RecyclerView) view.findViewById(R.id.dayslistview2);
         ivClose=(ImageView)view.findViewById(R.id.ivCloseBookingDetail);
         btnFindSpot=(Button)view.findViewById(R.id.findSpotBookingDetail);
         btnBookNow=(Button)view.findViewById(R.id.btnBookNowBookingDetail);
@@ -85,6 +96,43 @@ public class BookingDetailsFragment extends Fragment {
         recyclerViewTimes=(RecyclerView)view.findViewById(R.id.rvGroundDetailTimes);
         linearLayoutFavorite=(LinearLayout)view.findViewById(R.id.layoutFavourite);
         linearLayoutFilter=(LinearLayout)view.findViewById(R.id.bottomViewBookingDetail);
+
+        tvTime1 = (TextView) view.findViewById(R.id.tvTime1BookingDetail);
+        tvTime2 = (TextView) view.findViewById(R.id.tvTime2BookingDetail);
+        tvTime3 = (TextView) view.findViewById(R.id.tvTime3BookingDetail);
+        btnDuration30 = (TextView) view.findViewById(R.id.btnDuration1BookingDetail);
+        btnDuration60 = (TextView) view.findViewById(R.id.btnDuration2BookingDetail);
+        btnDuration90 = (TextView) view.findViewById(R.id.btnDuration3BookingDetail);
+        btnSportFootball = (TextView) view.findViewById(R.id.btnSports1BookingDetail);
+        btnSportBasketBall = (TextView) view.findViewById(R.id.btnSports2BookingDetail);
+        btnSportCricket = (TextView) view.findViewById(R.id.btnSports3BookingDetail);
+
+        tvTime1.setOnClickListener(this);
+        tvTime2.setOnClickListener(this);
+        tvTime3.setOnClickListener(this);
+        btnSportCricket.setOnClickListener(this);
+        btnSportBasketBall.setOnClickListener(this);
+        btnSportFootball.setOnClickListener(this);
+        btnDuration30.setOnClickListener(this);
+        btnDuration60.setOnClickListener(this);
+        btnDuration90.setOnClickListener(this);
+
+        //get 7 days date
+        SimpleDateFormat curFormater = new SimpleDateFormat("MMM dd yyyy");
+        year = new SimpleDateFormat("yyyy");
+        editor.putString("date",String.valueOf(curFormater)).commit();
+        GregorianCalendar date = new GregorianCalendar();
+        String[] dateStringArray = new String[7];
+        date.set(GregorianCalendar.DATE, date.get(GregorianCalendar.DATE) - date.get(GregorianCalendar.MONTH));
+        for (int day = 0; day < 7; day++) {
+            dateStringArray[day] = curFormater.format(date.getTime());
+            date.roll(Calendar.DAY_OF_MONTH, true);
+        }
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewDate.setLayoutManager(linearLayoutManager2);
+        recyclerViewAdapter = new DateAndTimeAdapter(getActivity(),dateStringArray);
+        recyclerViewDate.setAdapter(recyclerViewAdapter);
+        filterDate=sharedPreferences.getString("filterDate","");
 
         groundName=getArguments().getString("groundName");
         groundId=getArguments().getString("groundId");
@@ -258,4 +306,96 @@ public class BookingDetailsFragment extends Fragment {
         mRequestQueue.add(stringRequest);
     }
 
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.tvTime1BookingDetail:
+                tvTime1.setBackgroundResource(R.drawable.custom_rounded_shape);
+                tvTime2.setBackgroundResource(0);
+                tvTime3.setBackgroundResource(0);
+                tvTime1.setTextColor(Color.WHITE);
+                tvTime2.setTextColor(Color.GRAY);
+                tvTime3.setTextColor(Color.GRAY);
+                filterTimeTo = "7AM";
+                filterTimeFrom = "11AM";
+                break;
+            case R.id.tvTime2BookingDetail:
+                tvTime2.setBackgroundResource(R.drawable.custom_rounded_shape);
+                tvTime1.setBackgroundResource(0);
+                tvTime3.setBackgroundResource(0);
+                tvTime2.setTextColor(Color.WHITE);
+                tvTime1.setTextColor(Color.GRAY);
+                tvTime3.setTextColor(Color.GRAY);
+                filterTimeTo = "12AM";
+                filterTimeFrom = "2AM";
+                break;
+            case R.id.tvTime3BookingDetail:
+                tvTime3.setBackgroundResource(R.drawable.custom_rounded_shape);
+                tvTime1.setBackgroundResource(0);
+                tvTime2.setBackgroundResource(0);
+                tvTime3.setTextColor(Color.WHITE);
+                tvTime2.setTextColor(Color.GRAY);
+                tvTime1.setTextColor(Color.GRAY);
+                filterTimeTo = "3PM";
+                filterTimeFrom = "5PM";
+                break;
+            case R.id.btnSports1BookingDetail:
+                btnSportFootball.setBackgroundResource(R.drawable.custom_rounded_shape);
+                btnSportFootball.setTextColor(Color.WHITE);
+                btnSportBasketBall.setTextColor(Color.GRAY);
+                btnSportCricket.setTextColor(Color.GRAY);
+                btnSportBasketBall.setBackgroundResource(0);
+                btnSportCricket.setBackgroundResource(0);
+                filterSport = "Football";
+                break;
+            case R.id.btnSports2BookingDetail:
+                btnSportBasketBall.setBackgroundResource(R.drawable.custom_rounded_shape);
+                btnSportBasketBall.setTextColor(Color.WHITE);
+                btnSportFootball.setTextColor(Color.GRAY);
+                btnSportCricket.setTextColor(Color.GRAY);
+                btnSportFootball.setBackgroundResource(0);
+                btnSportCricket.setBackgroundResource(0);
+                filterSport = "BasketBall";
+                break;
+            case R.id.btnSports3BookingDetail:
+                btnSportCricket.setBackgroundResource(R.drawable.custom_rounded_shape);
+                btnSportCricket.setTextColor(Color.WHITE);
+                btnSportBasketBall.setTextColor(Color.GRAY);
+                btnSportFootball.setTextColor(Color.GRAY);
+                btnSportBasketBall.setBackgroundResource(0);
+                btnSportFootball.setBackgroundResource(0);
+                filterSport = "Cricket";
+                break;
+            case R.id.btnDuration1BookingDetail:
+                btnDuration30.setBackgroundResource(R.drawable.custom_rounded_shape);
+                btnDuration30.setTextColor(Color.WHITE);
+                btnDuration90.setTextColor(Color.GRAY);
+                btnDuration60.setTextColor(Color.GRAY);
+                btnDuration60.setBackgroundResource(0);
+                btnDuration90.setBackgroundResource(0);
+                filterDuration = "30";
+                break;
+            case R.id.btnDuration2BookingDetail:
+                btnDuration60.setBackgroundResource(R.drawable.custom_rounded_shape);
+                btnDuration60.setTextColor(Color.WHITE);
+                btnDuration90.setTextColor(Color.GRAY);
+                btnDuration30.setTextColor(Color.GRAY);
+                btnDuration30.setBackgroundResource(0);
+                btnDuration90.setBackgroundResource(0);
+                filterDuration = "60";
+                break;
+            case R.id.btnDuration3BookingDetail:
+                btnDuration90.setBackgroundResource(R.drawable.custom_rounded_shape);
+                btnDuration90.setTextColor(Color.WHITE);
+                btnDuration30.setTextColor(Color.GRAY);
+                btnDuration60.setTextColor(Color.GRAY);
+                btnDuration60.setBackgroundResource(0);
+                btnDuration30.setBackgroundResource(0);
+                filterDuration = "90";
+                break;
+            default:
+                break;
+        }
+    }
 }
