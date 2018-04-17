@@ -3,7 +3,6 @@ package com.techease.openspot.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.techease.openspot.Adapters.GroundDetailTimesAdapter;
 import com.techease.openspot.R;
 import com.techease.openspot.ui.activities.BookingPlacedActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookNowFragment extends Fragment {
 
@@ -23,6 +27,9 @@ public class BookNowFragment extends Fragment {
     String strType,strTime,strPrice,strGroundName,strUserId;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    ArrayList<String> timeArray=new ArrayList<String>();
+    ArrayList<String> priceArr=new ArrayList<String>();
+    int sum=0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,8 +54,15 @@ public class BookNowFragment extends Fragment {
         btnBookNow=(Button)view.findViewById(R.id.btnBookNow);
 
         tvType.setText(strType);
-        tvTime.setText(strTime);
-        tvPrice.setText(strPrice);
+        timeArray=GroundDetailTimesAdapter.timeArray;
+        tvTime.setText(timeArray.toString().replace("[","").replace("]","").replace(","," "));
+        priceArr=GroundDetailTimesAdapter.priceArray;
+        List<Integer> priceArray=new ArrayList<Integer>(priceArr.size());
+        for (String myInt:priceArr)
+        {
+            priceArray.add(Integer.valueOf(myInt));
+        }
+        tvPrice.setText(String.valueOf(priceArray).replace("[","").replace("]","").replace(",",""));
         tvGroundName.setText(strGroundName);
 
         btnBookNow.setOnClickListener(new View.OnClickListener() {

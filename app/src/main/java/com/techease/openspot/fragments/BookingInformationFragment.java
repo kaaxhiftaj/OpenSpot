@@ -76,9 +76,9 @@ public class BookingInformationFragment extends Fragment {
         editor = sharedPreferences.edit();
         type=sharedPreferences.getString("type","");
         groundName=sharedPreferences.getString("groundName","");
-        time=getArguments().getString("time");
-        timeId=getArguments().getInt("timeId");
-        price=getArguments().getString("price");
+        time=sharedPreferences.getString("time","");
+        timeId=sharedPreferences.getInt("timeId",1);
+        price=sharedPreferences.getString("price","");
         tvName=(TextView)view.findViewById(R.id.tvGroundNameBookingInfo);
         tvPrice=(TextView)view.findViewById(R.id.tvPriceBookingInfo);
         tvTime=(TextView)view.findViewById(R.id.tvTimeBookingInfo);

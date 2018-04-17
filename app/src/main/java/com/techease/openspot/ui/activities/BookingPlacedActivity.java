@@ -73,6 +73,7 @@ public class BookingPlacedActivity extends AppCompatActivity {
             alertDialog= AlertsUtils.createProgressDialog(this);
             alertDialog.show();
         }
+        Toast.makeText(this, strUserId, Toast.LENGTH_SHORT).show();
         apicall();
     }
     private void apicall() {
@@ -121,6 +122,7 @@ public class BookingPlacedActivity extends AppCompatActivity {
                 params.put("user_id",strUserId);
                 params.put("time_id", String.valueOf(time_id));
                 params.put("price",strPrice);
+                params.put("date","1/2/2018");
                 return params;
             }
 

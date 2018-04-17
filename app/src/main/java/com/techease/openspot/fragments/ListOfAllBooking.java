@@ -256,7 +256,6 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                         model.setType(temp.getString("type"));
                         model.setInformation(temp.getString("information"));
                         list.add(model);
-
                     }
                     if (alertDialog != null)
                         alertDialog.dismiss();

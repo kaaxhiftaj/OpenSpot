@@ -2,30 +2,25 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10sp"
+    android:layout_height="40sp"
+    android:layout_marginBottom="15sp"
     android:id="@+id/linearLayoutTimeAndPrice"
     android:orientation="horizontal"
     android:background="#fff">
-
-
     <TextView
         android:layout_width="0sp"
-        android:layout_weight="0.3"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:id="@+id/tvTime"
         android:textColor="#BDBDBD"
-        android:layout_marginTop="10sp"
+        android:layout_gravity="center"
         android:layout_marginLeft="10sp"
-        android:layout_marginBottom="10sp"
         android:textSize="15sp"
         android:text="Time"
         />
-
     <TextView
         android:id="@+id/tvPrice"
-        android:layout_width="0sp"
-        android:layout_weight="0.04"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Price"
@@ -36,8 +31,15 @@
     <ImageView
         android:layout_width="10sp"
         android:layout_height="15sp"
-        android:layout_marginRight="10sp"
+        android:layout_marginRight="5sp"
         android:layout_gravity="center"
         android:src="@drawable/rightarrow"
         android:id="@+id/imageView" />
+    <CheckBox
+        android:id="@+id/cbx"
+        android:layout_width="wrap_content"
+        android:buttonTint="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5sp"
+        android:layout_gravity="center"/>
 </LinearLayout>

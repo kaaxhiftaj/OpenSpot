@@ -47,6 +47,7 @@ import java.util.Map;
 public class BookingDetailsFragment extends Fragment {
 
     Button btnChange,btnFindSpot;
+   public static Button btnBookNow;
     ImageView ivClose;
     String groundName,groundId,groundInfo;
     TextView tvName,tvInfo,tvLocation;
@@ -60,6 +61,7 @@ public class BookingDetailsFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String token,UserId;
+    String sortTime;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,6 +74,7 @@ public class BookingDetailsFragment extends Fragment {
         editor = sharedPreferences.edit();
         ivClose=(ImageView)view.findViewById(R.id.ivCloseBookingDetail);
         btnFindSpot=(Button)view.findViewById(R.id.findSpotBookingDetail);
+        btnBookNow=(Button)view.findViewById(R.id.btnBookNowBookingDetail);
         token=sharedPreferences.getString("token","");
         UserId=sharedPreferences.getString("user_id","");
         tvName=(TextView)view.findViewById(R.id.tvGroundDetailName);
@@ -201,7 +204,8 @@ public class BookingDetailsFragment extends Fragment {
                         list.add(model);
                         adapter.notifyDataSetChanged();
                     }
-                    JSONArray jsonArray=jsonObject.getJSONArray("times");
+                    JSONObject time_Object=jsonObject.getJSONObject("times");
+                    JSONArray jsonArray=time_Object.getJSONArray("Morning");
                     for (int i=0; i<jsonArray.length(); i++)
                     {
                         Log.d("zmaTimes",String.valueOf(jsonArray));

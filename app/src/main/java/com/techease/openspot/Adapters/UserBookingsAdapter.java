@@ -29,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.techease.openspot.R;
 import com.techease.openspot.controllers.UserBookingsModel;
 import com.techease.openspot.fragments.BookingDetailsFragment;
+import com.techease.openspot.fragments.UserBookingFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,6 +73,8 @@ public class UserBookingsAdapter extends RecyclerView.Adapter<UserBookingsAdapte
                     public void onResponse(String response) {
                         if (holder.alertDialog!=null)
                             holder.alertDialog.dismiss();
+                        Fragment fragment=new UserBookingFragment();
+                        ((AppCompatActivity)context).getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
                         Toast.makeText(context, "Booking Canceled", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
