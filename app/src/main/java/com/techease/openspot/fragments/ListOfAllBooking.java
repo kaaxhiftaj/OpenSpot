@@ -116,15 +116,14 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-mmm-yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = df.format(c);
         editor.putString("date",formattedDate).commit();
-       // Toast.makeText(getActivity(), formattedDate, Toast.LENGTH_SHORT).show();
         //get 7 days date
         SimpleDateFormat curFormater = new SimpleDateFormat("MMM dd");
          year = new SimpleDateFormat("yyyy");
          formatYear=year.format(c);
-        Toast.makeText(getActivity(), String.valueOf(formatYear), Toast.LENGTH_SHORT).show();
+
         GregorianCalendar date = new GregorianCalendar();
         String[] dateStringArray = new String[7];
         date.set(GregorianCalendar.DATE, date.get(GregorianCalendar.DATE) - date.get(GregorianCalendar.MONTH));

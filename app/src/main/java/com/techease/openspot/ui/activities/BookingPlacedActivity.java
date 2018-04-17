@@ -59,7 +59,6 @@ public class BookingPlacedActivity extends AppCompatActivity {
         time_id=sharedPreferences.getInt("time_id",1);
         strPrice=sharedPreferences.getString("price","");
         date=sharedPreferences.getString("date","");
-        Toast.makeText(BookingPlacedActivity.this, date, Toast.LENGTH_SHORT).show();
         tvDate=(TextView)findViewById(R.id.tvDate);
         tvDuration=(TextView)findViewById(R.id.tvDuration);
         tvPrice=(TextView)findViewById(R.id.tvPriceBooked);
@@ -95,8 +94,6 @@ public class BookingPlacedActivity extends AppCompatActivity {
 
     }
     private void apicall(Integer integer, String s) {
-        Toast.makeText(this,"price "+ s, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this,"timeId "+ String.valueOf(integer), Toast.LENGTH_SHORT).show();
         final StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://openspot.qa/openspot/bookground"
                 , new Response.Listener<String>() {
             @Override
@@ -143,7 +140,6 @@ public class BookingPlacedActivity extends AppCompatActivity {
                 params.put("time_id", String.valueOf(integer));
                 params.put("price",s);
                 params.put("date",date);
-
                 return params;
             }
         };

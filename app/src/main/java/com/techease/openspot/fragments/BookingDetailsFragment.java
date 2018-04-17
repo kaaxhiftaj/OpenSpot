@@ -43,6 +43,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +72,7 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
     RecyclerView recyclerViewDate;
     DateAndTimeAdapter recyclerViewAdapter;
     SimpleDateFormat year;
-    String filterDate,filterSport, filterDuration, filterTimeTo, filterTimeFrom;
+    String filterDate,filterSport, filterDuration, filterTimeTo, filterTimeFrom,formatYear;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -117,10 +118,17 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
         btnDuration60.setOnClickListener(this);
         btnDuration90.setOnClickListener(this);
 
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = df.format(c);
+        editor.putString("date",formattedDate).commit();
         //get 7 days date
-        SimpleDateFormat curFormater = new SimpleDateFormat("MMM dd yyyy");
+        SimpleDateFormat curFormater = new SimpleDateFormat("MMM dd");
         year = new SimpleDateFormat("yyyy");
-        editor.putString("date",String.valueOf(curFormater)).commit();
+        formatYear=year.format(c);
+
         GregorianCalendar date = new GregorianCalendar();
         String[] dateStringArray = new String[7];
         date.set(GregorianCalendar.DATE, date.get(GregorianCalendar.DATE) - date.get(GregorianCalendar.MONTH));
