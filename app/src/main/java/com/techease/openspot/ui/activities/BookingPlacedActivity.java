@@ -98,7 +98,7 @@ public class BookingPlacedActivity extends AppCompatActivity {
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("ZmaBooking", response);
+                Log.d("ZmaBooings", response);
                 try {
                     JSONObject jsonObject=new JSONObject(response);
                     JSONObject object=jsonObject.getJSONObject("data");

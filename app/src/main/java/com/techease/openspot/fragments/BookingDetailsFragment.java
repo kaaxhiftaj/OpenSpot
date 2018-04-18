@@ -124,21 +124,20 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = df.format(c);
         editor.putString("date",formattedDate).commit();
-        //get 7 days date
-        SimpleDateFormat curFormater = new SimpleDateFormat("MMM dd");
-        year = new SimpleDateFormat("yyyy");
-        formatYear=year.format(c);
 
-        GregorianCalendar date = new GregorianCalendar();
-        String[] dateStringArray = new String[7];
-        date.set(GregorianCalendar.DATE, date.get(GregorianCalendar.DATE) - date.get(GregorianCalendar.MONTH));
-        for (int day = 0; day < 7; day++) {
-            dateStringArray[day] = curFormater.format(date.getTime());
-            date.roll(Calendar.DAY_OF_MONTH, true);
+        //for next 7 days
+        SimpleDateFormat format = new SimpleDateFormat("MMM dd");
+        Calendar date2 = Calendar.getInstance();
+        String[] dateStringArray2 = new String[7];
+        for(int i = 0; i < 7;i++)
+        {
+            dateStringArray2[i] = format.format(date2.getTime());
+            date2.add(Calendar.DATE  , 1);
+            Toast.makeText(getActivity(), dateStringArray2[i], Toast.LENGTH_SHORT).show();
         }
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewDate.setLayoutManager(linearLayoutManager2);
-        recyclerViewAdapter = new DateAndTimeAdapter(getActivity(),dateStringArray);
+        recyclerViewAdapter = new DateAndTimeAdapter(getActivity(),dateStringArray2);
         recyclerViewDate.setAdapter(recyclerViewAdapter);
         filterDate=sharedPreferences.getString("filterDate","");
 

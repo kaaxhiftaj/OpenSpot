@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.techease.openspot.R;
+import com.techease.openspot.fragments.ListOfAllBooking;
 
 /**
  * Created by Adamnoor on 3/20/2018.
@@ -19,6 +20,7 @@ import com.techease.openspot.R;
 public class DateAndTimeAdapter extends RecyclerView.Adapter<DateAndTimeAdapter.viewHolder>  {
     String[] names;
     Context context;
+    public static String getDate;
     public DateAndTimeAdapter(Context context, String[] dateStringArray) {
         this.context=context;
         this.names=dateStringArray;
@@ -32,12 +34,12 @@ public class DateAndTimeAdapter extends RecyclerView.Adapter<DateAndTimeAdapter.
 
     @Override
     public void onBindViewHolder(final DateAndTimeAdapter.viewHolder holder, final int position) {
-        holder.days.setText(names[position]);
+        holder.days.setText(names[position].replace("-"," "));
         holder.days.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String getDate=names[position];
-                holder.editor.putString("filterDate",getDate).commit();
+                getDate=names[position];
+                ListOfAllBooking.filterDate=getDate;
             }
         });
     }

@@ -45,6 +45,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -61,7 +63,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
     Button btnFindspot;
     ImageView ivClose;
     TextView btnDuration30,btnDuration60, btnDuration90, btnSportFootball, btnSportBasketBall, btnSportCricket,
-    tvTime1,tvTime2,tvTime3;
+    tvTime1,tvTime2,tvTime3,tvNoGroundFound;
     RecyclerView daysRecycler, groundsRecycler;
     DateAndTimeAdapter recyclerViewAdapter;
     LinearLayout linearLayoutSpot;
@@ -71,8 +73,8 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     SimpleDateFormat year;
-    String filterDate, filterSport, filterDuration, filterTimeTo, filterTimeFrom,formatYear;
-
+    String  filterSport="football",  filterDuration = "30", filterTimeTo, filterTimeFrom,formatYear;
+    public static String filterDate;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,6 +89,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
         daysRecycler = (RecyclerView) view.findViewById(R.id.dayslistview);
         linearLayoutSpot = (LinearLayout) view.findViewById(R.id.bottomView);
         searchView = (EditText) view.findViewById(R.id.searchView);
+        tvNoGroundFound=(TextView)view.findViewById(R.id.tvNoGroundFound);
         groundsRecycler = (RecyclerView) view.findViewById(R.id.rvAllBookings);
         ivClose = (ImageView) view.findViewById(R.id.ivClose);
         btnFindspot = (Button) view.findViewById(R.id.findSpot);
@@ -114,29 +117,27 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
         list = new ArrayList<>();
 
         Date c = Calendar.getInstance().getTime();
-        System.out.println("Current time => " + c);
-
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = df.format(c);
         editor.putString("date",formattedDate).commit();
-        //get 7 days date
-        SimpleDateFormat curFormater = new SimpleDateFormat("MMM dd");
-         year = new SimpleDateFormat("yyyy");
-         formatYear=year.format(c);
 
-        GregorianCalendar date = new GregorianCalendar();
-        String[] dateStringArray = new String[7];
-        date.set(GregorianCalendar.DATE, date.get(GregorianCalendar.DATE) - date.get(GregorianCalendar.MONTH));
-        for (int day = 0; day < 7; day++) {
-            dateStringArray[day] = curFormater.format(date.getTime());
-            date.roll(Calendar.DAY_OF_MONTH, true);
+        //for getting year
+        SimpleDateFormat formatYears = new SimpleDateFormat("yyyy");
+        formatYear= formatYears.format(c);
+
+        //for next 7 days
+        SimpleDateFormat format = new SimpleDateFormat("MMM-dd");
+        Calendar date2 = Calendar.getInstance();
+        String[] dateStringArray2 = new String[7];
+        for(int i = 0; i < 7;i++)
+        {
+            dateStringArray2[i] = format.format(date2.getTime());
+            date2.add(Calendar.DATE  , 1);
         }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         daysRecycler.setLayoutManager(linearLayoutManager);
-        recyclerViewAdapter = new DateAndTimeAdapter(getActivity(),dateStringArray);
+        recyclerViewAdapter = new DateAndTimeAdapter(getActivity(),dateStringArray2);
         daysRecycler.setAdapter(recyclerViewAdapter);
-        filterDate=sharedPreferences.getString("filterDate","");
-
 
 
         if (alertDialog == null) {
@@ -168,12 +169,13 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
         btnFindspot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (alertDialog == null) {
+                if (alertDialog == null)
                     alertDialog = AlertsUtils.createProgressDialog(getActivity());
                     alertDialog.show();
-                }
-                apiCallForSearch();
                 linearLayoutSpot.setVisibility(View.GONE);
+                apiCallForSearch();
+
+
             }
         });
 
@@ -185,9 +187,10 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("ZmaGrounds", response);
+                Log.d("ZmaFilter", response);
 
                 try {
+                    list.clear();
                   JSONObject  jsonObject = new JSONObject(response);
                     JSONArray jsonArray=jsonObject.getJSONArray("data");
                     for(int i=0; i<jsonArray.length(); i++)
@@ -201,6 +204,15 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                         model.setImage(object.getString("image"));
                         model.setInformation(object.getString("information"));
                         list.add(model);
+
+                    }
+                    if (list.size()<1)
+                    {
+                        tvNoGroundFound.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        tvNoGroundFound.setVisibility(View.GONE);
                     }
                     if (alertDialog != null)
                         alertDialog.dismiss();
@@ -217,9 +229,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
             public void onErrorResponse(VolleyError error) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
-
                 Log.d("error", String.valueOf(error.getCause()));
-
             }
         }) {
             @Override
@@ -230,12 +240,11 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("date",filterDate+"/"+formatYear);
-                editor.putString("date",filterDate+"/"+String.valueOf(year)).commit();
-                params.put("time_from",filterTimeFrom);
-                params.put("time_to",filterTimeTo);
+                params.put("date",formatYear+"-"+filterDate);
+                editor.putString("date",filterDate+"/"+formatYear).commit();
                 params.put("duration",filterDuration);
                 params.put("sport",filterSport);
+                params.put("slot","Morning");
                 Log.d("zmaParm",params.toString());
                 return params;
             }
@@ -295,7 +304,6 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
             public String getBodyContentType() {
                 return "application/x-www-form-urlencoded;charset=UTF-8";
             }
-
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
