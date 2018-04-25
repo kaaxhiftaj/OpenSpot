@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,7 @@ public class BookingInformationFragment extends Fragment {
     TextView tvConnect,tvPrice,tvType,tvTime,tvName;
     String type,time,price,groundName,strEmail,fullName;
     int timeId;
+    ImageView ivBack;
     String provider;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -77,15 +79,18 @@ public class BookingInformationFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
         type=sharedPreferences.getString("type","");
         groundName=sharedPreferences.getString("groundName","");
         time=sharedPreferences.getString("time","");
         timeId=sharedPreferences.getInt("timeId",1);
         price=sharedPreferences.getString("price","");
+
         tvName=(TextView)view.findViewById(R.id.tvGroundNameBookingInfo);
         tvPrice=(TextView)view.findViewById(R.id.tvPriceBookingInfo);
         tvTime=(TextView)view.findViewById(R.id.tvTimeBookingInfo);
         tvType=(TextView)view.findViewById(R.id.tvType);
+        ivBack=(ImageView)view.findViewById(R.id.ivBackBookingInfo);
 
         btnEmail=(Button)view.findViewById(R.id.btnEmailBookingInfo);
         btnFb=(Button)view.findViewById(R.id.btnFbBookingInfo);
@@ -100,6 +105,14 @@ public class BookingInformationFragment extends Fragment {
         tvName.setText(groundName);
 
         provider = "facebook";
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment=new BookingDetailsFragment();
+                getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
+            }
+        });
 
         btnFb.setOnClickListener(new View.OnClickListener() {
             @Override

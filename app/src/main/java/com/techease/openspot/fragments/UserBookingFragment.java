@@ -105,6 +105,7 @@ public class UserBookingFragment extends Fragment {
                         model.setName(object.getString("name"));
                         model.setLocation(object.getString("location"));
                         model.setType(object.getString("type"));
+                        model.setTime(object.getString("time"));
                         model.setInformation(object.getString("information"));
                         list.add(model);
                     }

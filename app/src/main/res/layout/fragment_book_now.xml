@@ -4,7 +4,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.techease.openspot.fragments.BookNowFragment">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70sp"
+        android:background="#fff"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:id="@+id/ivBackBookNow"
+            android:layout_width="50sp"
+            android:layout_height="20sp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10sp"
+            android:src="@drawable/back_arrow"
+            />
+    </LinearLayout>
     <ImageView
         android:layout_width="180sp"
         android:layout_height="70sp"
@@ -59,13 +73,14 @@
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="0sp"
-                    android:layout_weight="0.8"
+                    android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:text="BOOKING TIME"/>
                 <TextView
                     android:id="@+id/tvTimeBookNow"
-                    android:layout_width="70sp"
+                    android:layout_width="0sp"
+                    android:layout_weight="0.2"
                     android:layout_height="wrap_content"
                     android:text="5 PM to 5:30 PM"
                     android:textSize="12sp"
@@ -78,13 +93,14 @@
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="0sp"
-                    android:layout_weight="0.6"
+                    android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:text="SPORT"/>
                 <TextView
                     android:id="@+id/tvTypeBookNow"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0sp"
+                    android:layout_weight="0.2"
                     android:layout_height="wrap_content"
                     android:text="FOOTBALL"
                     android:textSize="12sp"
@@ -98,19 +114,19 @@
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="0sp"
-                    android:layout_weight="0.6"
+                    android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:text="PRICE"/>
                 <TextView
                     android:id="@+id/tvPriceBookNow"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0sp"
+                    android:layout_weight="0.2"
                     android:layout_height="wrap_content"
                     android:text="50 QAR"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
-                    android:layout_marginLeft="112sp"
                     />
             </LinearLayout>
         </LinearLayout>

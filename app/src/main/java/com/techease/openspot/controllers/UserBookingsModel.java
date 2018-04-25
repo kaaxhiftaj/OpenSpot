@@ -5,7 +5,23 @@ package com.techease.openspot.controllers;
  */
 
 public class UserBookingsModel {
-    String id,name,location,information,image,type;
+    String id;
+    String name;
+    String location;
+    String information;
+    String image;
+    String type;
+    String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+
 
     public String getId() {
         return id;

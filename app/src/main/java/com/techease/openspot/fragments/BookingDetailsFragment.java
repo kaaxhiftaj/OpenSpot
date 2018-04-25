@@ -27,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonArray;
 import com.techease.openspot.Adapters.DateAndTimeAdapter;
 import com.techease.openspot.Adapters.GroundDetailImageAdapter;
 import com.techease.openspot.Adapters.GroundDetailTimesAdapter;
@@ -54,7 +55,7 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
 
     Button btnChange,btnFindSpot;
     public static Button btnBookNow;
-    ImageView ivClose;
+    ImageView ivClose,ivLike,ivBack;
     String groundName,groundId,groundInfo;
     TextView tvName,tvInfo,tvLocation;
     TextView btnDuration30,btnDuration60, btnDuration90, btnSportFootball, btnSportBasketBall, btnSportCricket,
@@ -65,14 +66,13 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
     List<GroundDetailImgeModel> list;
     GroundDetailImageAdapter adapter;
     android.support.v7.app.AlertDialog alertDialog;
-    LinearLayout linearLayoutFavorite,linearLayoutFilter;
+    LinearLayout linearLayoutFavorite,linearLayoutFilter,topLayoutOfBack;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String token,UserId;
-    RecyclerView recyclerViewDate;
+   public static RecyclerView recyclerViewDate;
     DateAndTimeAdapter recyclerViewAdapter;
-    SimpleDateFormat year;
-    String filterDate,filterSport, filterDuration, filterTimeTo, filterTimeFrom,formatYear;
+    String filterDate,filterSport, filterDuration, filterTimeTo, filterTimeFrom,time,strFavourite,formatYear,slot;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,12 +83,13 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        ivBack=(ImageView)view.findViewById(R.id.ivBack);
+        ivLike=(ImageView)view.findViewById(R.id.ivLike);
+        topLayoutOfBack=(LinearLayout)view.findViewById(R.id.topLayoutOfBack);
         recyclerViewDate = (RecyclerView) view.findViewById(R.id.dayslistview2);
         ivClose=(ImageView)view.findViewById(R.id.ivCloseBookingDetail);
         btnFindSpot=(Button)view.findViewById(R.id.findSpotBookingDetail);
         btnBookNow=(Button)view.findViewById(R.id.btnBookNowBookingDetail);
-        token=sharedPreferences.getString("token","");
-        UserId=sharedPreferences.getString("user_id","");
         tvName=(TextView)view.findViewById(R.id.tvGroundDetailName);
         tvInfo=(TextView)view.findViewById(R.id.tvInfoGroundDetail);
         btnChange=(Button)view.findViewById(R.id.btnChange);
@@ -118,10 +119,12 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
         btnDuration60.setOnClickListener(this);
         btnDuration90.setOnClickListener(this);
 
-        Date c = Calendar.getInstance().getTime();
-        System.out.println("Current time => " + c);
+        token=sharedPreferences.getString("token","");
+        UserId=sharedPreferences.getString("user_id","");
+        formatYear=sharedPreferences.getString("formatyear","");
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MMM-dd");
         String formattedDate = df.format(c);
         editor.putString("date",formattedDate).commit();
 
@@ -133,7 +136,6 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
         {
             dateStringArray2[i] = format.format(date2.getTime());
             date2.add(Calendar.DATE  , 1);
-            Toast.makeText(getActivity(), dateStringArray2[i], Toast.LENGTH_SHORT).show();
         }
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewDate.setLayoutManager(linearLayoutManager2);
@@ -157,7 +159,17 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
             alertDialog= AlertsUtils.createProgressDialog(getActivity());
             alertDialog.show();
         }
-        apicall();
+
+        time=sharedPreferences.getString("time","");
+        if (time.equals(""))
+        {
+            apicall("Morning");
+        }
+        else
+        {
+            apicall(time);
+        }
+
         adapter=new GroundDetailImageAdapter(getActivity(),list);
         recyclerViewImage.setAdapter(adapter);
         timesAdapter=new GroundDetailTimesAdapter(getActivity(),timesModels);
@@ -166,16 +178,33 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
         btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             linearLayoutFilter.setVisibility(View.VISIBLE);
+                topLayoutOfBack.setVisibility(View.GONE);
+                linearLayoutFilter.setVisibility(View.VISIBLE);
             }
         });
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                topLayoutOfBack.setVisibility(View.VISIBLE);
                 linearLayoutFilter.setVisibility(View.GONE);
             }
         });
-
+        btnFindSpot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                apicallFilter();
+                linearLayoutFilter.setVisibility(View.GONE);
+                topLayoutOfBack.setVisibility(View.VISIBLE);
+            }
+        });
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment=new ListOfAllBooking();
+                getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
+            }
+        });
         linearLayoutFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,6 +223,74 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
         return view;
     }
 
+    private void apicallFilter() {
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://openspot.qa/openspot/filterSingleGround"
+                , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("zma timedetail", response);
+                timesModels.clear();
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+                    JSONArray jsonArray=jsonObject.getJSONArray("data");
+                    for (int i=0; i<jsonArray.length(); i++)
+                    {
+                        Log.d("zmaTimes",String.valueOf(jsonArray));
+                        JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                        GroundDetailTimesModel model1=new GroundDetailTimesModel();
+                        model1.setTimeId(jsonObject1.getInt("time_id"));
+                        model1.setTimeTo(jsonObject1.getString("time_to"));
+                        model1.setPrice(jsonObject1.getString("price"));
+                        model1.setTimeFrom(jsonObject1.getString("time_from"));
+                        model1.setIsBooked(jsonObject1.getString("is_booked"));
+                        timesModels.add(model1);
+                    }
+                    timesAdapter.notifyDataSetChanged();
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
+                }
+
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
+                Log.d("error" , String.valueOf(error.getCause()));
+
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded;charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("ground_id",groundId);
+                params.put("date",formatYear+"-"+filterDate);
+                editor.putString("date",formatYear+"-"+filterDate).commit();
+                params.put("duration",filterDuration);
+                params.put("sport",filterSport);
+                params.put("slot",slot);
+                Log.d("zmaParm",params.toString());
+                return params;
+            }
+
+        };
+        RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        mRequestQueue.add(stringRequest);
+    }
+
     private void apiCallForFavorite() {
         final StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://openspot.qa/openspot/userliked"
                 , new Response.Listener<String>() {
@@ -204,6 +301,14 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
                 try {
                     JSONObject jsonObject=new JSONObject(response);
                     String respo=jsonObject.getString("message");
+                    if (respo.contains("Added"))
+                    {
+                        ivLike.setBackgroundResource(R.drawable.greenlike);
+                    }
+                    else
+                    {
+                        ivLike.setBackgroundResource(R.drawable.like);
+                    }
                    // JSONObject object=jsonObject.getJSONObject("message");
                     Toast.makeText(getActivity(), respo, Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
@@ -242,14 +347,25 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
         mRequestQueue.add(stringRequest);
     }
 
-    private void apicall() {
+    private void apicall(String time) {
         final StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://openspot.qa/openspot/groundDetail"
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("zma timedetail", response);
+                    timesModels.clear();
                 try {
                     JSONObject jsonObject=new JSONObject(response);
+                    JSONObject groundObject=jsonObject.getJSONObject("ground");
+                    strFavourite=groundObject.getString("is_fav");
+                    if (strFavourite.equals(true))
+                    {
+                        ivLike.setBackgroundResource(R.drawable.greenlike);
+                    }
+                    else
+                    {
+                        ivLike.setBackgroundResource(R.drawable.like);
+                    }
                     JSONArray getJson=jsonObject.getJSONArray("images");
                     for(int z=0; z<getJson.length(); z++)
                     {
@@ -260,7 +376,7 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
                         adapter.notifyDataSetChanged();
                     }
                     JSONObject time_Object=jsonObject.getJSONObject("times");
-                    JSONArray jsonArray=time_Object.getJSONArray("Morning");
+                    JSONArray jsonArray=time_Object.getJSONArray(time);
                     for (int i=0; i<jsonArray.length(); i++)
                     {
                         Log.d("zmaTimes",String.valueOf(jsonArray));
@@ -270,7 +386,7 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
                         model1.setTimeTo(jsonObject1.getString("time_to"));
                         model1.setPrice(jsonObject1.getString("price"));
                         model1.setTimeFrom(jsonObject1.getString("time_from"));
-                        model1.setIsBooked(jsonObject1.getString("is_booked"));
+                      //  model1.setIsBooked(jsonObject1.getString("is_booked"));
                         timesModels.add(model1);
                     }
                     timesAdapter.notifyDataSetChanged();
@@ -326,6 +442,8 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
                 tvTime3.setTextColor(Color.GRAY);
                 filterTimeTo = "7AM";
                 filterTimeFrom = "11AM";
+                slot="Morning";
+                //apicall(slot);
                 break;
             case R.id.tvTime2BookingDetail:
                 tvTime2.setBackgroundResource(R.drawable.custom_rounded_shape);
@@ -336,6 +454,8 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
                 tvTime3.setTextColor(Color.GRAY);
                 filterTimeTo = "12AM";
                 filterTimeFrom = "2AM";
+                slot="Noon";
+                //apicall(slot);
                 break;
             case R.id.tvTime3BookingDetail:
                 tvTime3.setBackgroundResource(R.drawable.custom_rounded_shape);
@@ -346,6 +466,8 @@ public class BookingDetailsFragment extends Fragment implements View.OnClickList
                 tvTime1.setTextColor(Color.GRAY);
                 filterTimeTo = "3PM";
                 filterTimeFrom = "5PM";
+                slot="Afternoon";
+               // apicall(slot);
                 break;
             case R.id.btnSports1BookingDetail:
                 btnSportFootball.setBackgroundResource(R.drawable.custom_rounded_shape);

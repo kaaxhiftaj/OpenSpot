@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ public class BookNowFragment extends Fragment {
     String strType,strTime,strPrice,strGroundName,strUserId;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    ImageView ivBack;
     ArrayList<String> timeArray=new ArrayList<String>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,12 +54,21 @@ public class BookNowFragment extends Fragment {
         tvTime=(TextView)view.findViewById(R.id.tvTimeBookNow);
         tvType=(TextView)view.findViewById(R.id.tvPriceBookNow);
         btnBookNow=(Button)view.findViewById(R.id.btnBookNow);
+        ivBack=(ImageView)view.findViewById(R.id.ivBackBookNow);
 
         tvType.setText(strType);
         timeArray=GroundDetailTimesAdapter.timeArray;
         tvTime.setText(timeArray.toString().replace("[","").replace("]","").replace(","," "));
         tvPrice.setText(String.valueOf(GroundDetailTimesAdapter.price));
         tvGroundName.setText(strGroundName);
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment=new BookingDetailsFragment();
+                getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).commit();
+            }
+        });
 
         btnBookNow.setOnClickListener(new View.OnClickListener() {
             @Override

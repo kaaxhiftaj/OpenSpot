@@ -3,10 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="40sp"
-    android:layout_marginBottom="15sp"
+    android:layout_marginBottom="5sp"
     android:id="@+id/linearLayoutTimeAndPrice"
     android:orientation="horizontal"
     android:background="#fff">
+
     <TextView
         android:layout_width="0sp"
         android:layout_height="wrap_content"

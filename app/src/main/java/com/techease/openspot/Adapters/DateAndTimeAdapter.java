@@ -2,6 +2,7 @@ package com.techease.openspot.Adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.techease.openspot.R;
+import com.techease.openspot.fragments.BookingDetailsFragment;
 import com.techease.openspot.fragments.ListOfAllBooking;
 
 /**
@@ -39,9 +41,12 @@ public class DateAndTimeAdapter extends RecyclerView.Adapter<DateAndTimeAdapter.
             @Override
             public void onClick(View v) {
                 getDate=names[position];
+                int pos=position;
                 ListOfAllBooking.filterDate=getDate;
             }
         });
+
+
     }
 
     @Override

@@ -140,6 +140,7 @@ public class BookingPlacedActivity extends AppCompatActivity {
                 params.put("time_id", String.valueOf(integer));
                 params.put("price",s);
                 params.put("date",date);
+                Log.d("zmaaParams",String.valueOf(params));
                 return params;
             }
         };

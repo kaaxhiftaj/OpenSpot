@@ -63,7 +63,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
     Button btnFindspot;
     ImageView ivClose;
     TextView btnDuration30,btnDuration60, btnDuration90, btnSportFootball, btnSportBasketBall, btnSportCricket,
-    tvTime1,tvTime2,tvTime3,tvNoGroundFound;
+    tvTime1,tvTime2,tvTime3,tvNoGroundFound,tvNoOfGrounds;
     RecyclerView daysRecycler, groundsRecycler;
     DateAndTimeAdapter recyclerViewAdapter;
     LinearLayout linearLayoutSpot;
@@ -89,6 +89,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
         daysRecycler = (RecyclerView) view.findViewById(R.id.dayslistview);
         linearLayoutSpot = (LinearLayout) view.findViewById(R.id.bottomView);
         searchView = (EditText) view.findViewById(R.id.searchView);
+        tvNoOfGrounds=(TextView)view.findViewById(R.id.tvNoOfGrounds);
         tvNoGroundFound=(TextView)view.findViewById(R.id.tvNoGroundFound);
         groundsRecycler = (RecyclerView) view.findViewById(R.id.rvAllBookings);
         ivClose = (ImageView) view.findViewById(R.id.ivClose);
@@ -113,17 +114,20 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
         btnDuration60.setOnClickListener(this);
         btnDuration90.setOnClickListener(this);
 
+        editor.putString("time","").commit();
+
         groundsRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         list = new ArrayList<>();
 
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MMM-dd");
         String formattedDate = df.format(c);
         editor.putString("date",formattedDate).commit();
 
         //for getting year
         SimpleDateFormat formatYears = new SimpleDateFormat("yyyy");
         formatYear= formatYears.format(c);
+        editor.putString("filteryear",formatYear).commit();
 
         //for next 7 days
         SimpleDateFormat format = new SimpleDateFormat("MMM-dd");
@@ -175,7 +179,6 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 linearLayoutSpot.setVisibility(View.GONE);
                 apiCallForSearch();
 
-
             }
         });
 
@@ -204,15 +207,17 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                         model.setImage(object.getString("image"));
                         model.setInformation(object.getString("information"));
                         list.add(model);
-
+                        tvNoOfGrounds.setText(list.size()+" no of grounds available");
                     }
                     if (list.size()<1)
                     {
                         tvNoGroundFound.setVisibility(View.VISIBLE);
+                        tvNoOfGrounds.setVisibility(View.GONE);
                     }
                     else
                     {
                         tvNoGroundFound.setVisibility(View.GONE);
+                        tvNoOfGrounds.setVisibility(View.VISIBLE);
                     }
                     if (alertDialog != null)
                         alertDialog.dismiss();
@@ -277,6 +282,17 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                         model.setType(temp.getString("type"));
                         model.setInformation(temp.getString("information"));
                         list.add(model);
+                        tvNoOfGrounds.setText(String.valueOf(list.size())+" no of grounds available");
+                    }
+                    if (list.size()<1)
+                    {
+                        tvNoGroundFound.setVisibility(View.VISIBLE);
+                        tvNoOfGrounds.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        tvNoGroundFound.setVisibility(View.GONE);
+                        tvNoOfGrounds.setVisibility(View.VISIBLE);
                     }
                     if (alertDialog != null)
                         alertDialog.dismiss();
@@ -341,6 +357,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 tvTime3.setTextColor(Color.GRAY);
                 filterTimeTo = "7AM";
                 filterTimeFrom = "11AM";
+                editor.putString("time","Morning").commit();
                 break;
             case R.id.tvTime2:
                 tvTime2.setBackgroundResource(R.drawable.custom_rounded_shape);
@@ -351,6 +368,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 tvTime3.setTextColor(Color.GRAY);
                 filterTimeTo = "12AM";
                 filterTimeFrom = "2AM";
+                editor.putString("time","Noon").commit();
                 break;
             case R.id.tvTime3:
                 Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
@@ -362,6 +380,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 tvTime1.setTextColor(Color.GRAY);
                 filterTimeTo = "3PM";
                 filterTimeFrom = "5PM";
+                editor.putString("time","Afternoon").commit();
                 break;
             case R.id.btnSports1:
                 btnSportFootball.setBackgroundResource(R.drawable.custom_rounded_shape);

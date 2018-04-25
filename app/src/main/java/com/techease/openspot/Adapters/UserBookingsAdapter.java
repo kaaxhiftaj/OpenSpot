@@ -63,6 +63,7 @@ public class UserBookingsAdapter extends RecyclerView.Adapter<UserBookingsAdapte
        final UserBookingsModel model1=model.get(position);
         holder.tvClubInfo.setText(model1.getInformation());
         holder.tvClubName.setText(model1.getName());
+        holder.tvBookingTime.setText(model1.getTime());
         Glide.with(context).load(model1.getImage()).into(holder.imageView);
         holder.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +117,7 @@ public class UserBookingsAdapter extends RecyclerView.Adapter<UserBookingsAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView tvClubName,tvClubInfo;
+        TextView tvClubName,tvClubInfo,tvBookingTime;
         Button btnCancel;
         SharedPreferences sharedPreferences;
         SharedPreferences.Editor editor;
@@ -128,6 +129,7 @@ public class UserBookingsAdapter extends RecyclerView.Adapter<UserBookingsAdapte
             imageView=(ImageView)itemView.findViewById(R.id.ivClubImageUserBooking);
             tvClubName=(TextView)itemView.findViewById(R.id.tvClubNameUserBooking);
             tvClubInfo=(TextView)itemView.findViewById(R.id.tvClubInfoUserBooking);
+            tvBookingTime=(TextView)itemView.findViewById(R.id.tvBookingTiming);
             btnCancel=(Button)itemView.findViewById(R.id.btnCancelUserBooking);
         }
     }
