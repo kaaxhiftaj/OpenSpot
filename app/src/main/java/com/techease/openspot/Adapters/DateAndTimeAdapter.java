@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ public class DateAndTimeAdapter extends RecyclerView.Adapter<DateAndTimeAdapter.
     String[] names;
     Context context;
     public static String getDate;
+    boolean isChecked=false;
+    int rowID = -1;
     public DateAndTimeAdapter(Context context, String[] dateStringArray) {
         this.context=context;
         this.names=dateStringArray;
@@ -44,8 +47,10 @@ public class DateAndTimeAdapter extends RecyclerView.Adapter<DateAndTimeAdapter.
         holder.days.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isChecked=true;
                 getDate=names[position];
-
+                 rowID = position;
+                       notifyDataSetChanged();
                 SimpleDateFormat input = new SimpleDateFormat("MMM-dd-yyyy");
                 SimpleDateFormat outputDate=new SimpleDateFormat("yyyy-MM-dd");
                 try {
@@ -62,6 +67,13 @@ public class DateAndTimeAdapter extends RecyclerView.Adapter<DateAndTimeAdapter.
                 holder.editor.putString("date",getDate).commit();
             }
         });
+        if (rowID == position){
+            holder.days.setBackgroundResource(R.drawable.custom_btn_green);
+            holder.days.setTextColor(Color.WHITE);
+        }else {
+            holder.days.setBackgroundResource(0);
+            holder.days.setTextColor(Color.GRAY);
+        }
 
 
     }
@@ -71,15 +83,19 @@ public class DateAndTimeAdapter extends RecyclerView.Adapter<DateAndTimeAdapter.
         return names.length;
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder{
+    public class viewHolder extends RecyclerView.ViewHolder {
         TextView days;
         SharedPreferences sharedPreferences;
         SharedPreferences.Editor editor;
+
         public viewHolder(View itemView) {
             super(itemView);
             days =(TextView)itemView.findViewById(R.id.todayDate);
             sharedPreferences = context.getSharedPreferences("abc", Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
         }
+
+
     }
+
 }

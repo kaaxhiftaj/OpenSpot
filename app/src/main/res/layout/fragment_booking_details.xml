@@ -5,494 +5,506 @@
     android:background="#eee"
     android:orientation="vertical"
     tools:context="com.techease.openspot.fragments.BookingDetailsFragment">
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="50sp"
-      android:background="#fff"
-      android:id="@+id/topLayoutOfBack"
-      android:orientation="horizontal"
-     >
 
-      <ImageView
-          android:id="@+id/ivBack"
-          android:layout_width="50sp"
-          android:layout_height="20sp"
-          android:layout_alignParentStart="true"
-          android:layout_centerVertical="true"
-          android:layout_gravity="center"
-          android:layout_marginStart="15dp"
-          android:src="@drawable/back_arrow" />
-
-      <Button
-          android:id="@+id/btnBookNowBookingDetail"
-          android:layout_width="100sp"
-          android:layout_height="40sp"
-          android:visibility="gone"
-          android:layout_alignParentEnd="true"
-          android:layout_gravity="right|center"
-          android:layout_marginRight="10sp"
-          android:layout_marginTop="5sp"
-          android:background="@drawable/custom_btn_green"
-          android:text="Book Now"
-          android:textColor="#fff" />
-  </RelativeLayout>
-   <FrameLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/rvGroundDetailImage"
-    android:layout_marginTop="10sp"
-    android:layout_width="match_parent"
-    android:layout_gravity="center"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="10sp"
-    android:layout_marginRight="10sp"
-    >
-</android.support.v7.widget.RecyclerView>
-    <!--<ScrollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/topLayoutOfBack"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="5sp"
-    android:layout_marginLeft="10sp"
-    android:layout_marginRight="10sp"
-    android:background="#fff"
-    android:orientation="horizontal">
-    <LinearLayout
-        android:layout_width="0sp"
-        android:layout_weight="0.5"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        <TextView
-            android:id="@+id/tvGroundDetailName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="QATAR CLUB"
-            android:textStyle="bold"
-            android:textSize="10sp"
-            android:layout_marginTop="10sp"
-            android:layout_marginLeft="5sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DOHA"
-                android:textSize="10sp"
-                android:layout_marginLeft="10sp"
-                android:layout_marginTop="10sp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Information:"
-                android:textSize="12sp"
-                android:layout_marginLeft="5sp"
-                android:layout_marginTop="10sp"
-                />
-            <TextView
-                android:id="@+id/tvInfoGroundDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="outdoor football field"
-                android:textSize="10sp"
-                android:gravity="left"
-                android:layout_marginBottom="5sp"
-                android:layout_marginTop="10sp"
-                android:layout_marginLeft="5sp"/>
-        </LinearLayout>
-    </LinearLayout>
-    <View
-        android:layout_width="2sp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="2sp"
-        android:background="#eee"/>
-    <LinearLayout
-        android:layout_width="0sp"
-        android:layout_weight="0.2"
-        android:layout_height="wrap_content"
-        android:id="@+id/layoutFavourite"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/ivLike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5sp"
-            android:src="@drawable/like" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ADD TO \nFAVOURITE"
-            android:textSize="10sp"
-            android:layout_marginTop="5sp"
-            android:layout_marginLeft="2sp"
-            android:layout_marginRight="2sp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10sp"
-            android:gravity="center"/>
-    </LinearLayout>
-    <View
-        android:layout_width="2sp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="2sp"
-        android:background="#eee"/>
-    <LinearLayout
-        android:layout_width="0sp"
-        android:layout_weight="0.2"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/location"
-            android:layout_gravity="center"
-            android:layout_marginTop="5sp"/>
-        <TextView
-            android:id="@+id/tvLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="LOCATION"
-            android:textSize="10sp"
-            android:layout_gravity="center"
-            android:layout_marginTop="5sp"
-            android:layout_marginLeft="2sp"
-            android:layout_marginRight="2sp"/>
-    </LinearLayout>
-</LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50sp"
         android:background="#fff"
-        android:layout_marginTop="5sp"
-        android:layout_marginLeft="10sp"
-        android:layout_marginRight="10sp"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="0sp"
-            android:layout_weight="0.7"
-            android:layout_height="wrap_content"
-            android:text="TODAY EVENING FOOTBALL"
-            android:layout_gravity="center"
-            android:textStyle="italic"
-            android:layout_marginLeft="5sp"
-            />
-        <Button
-            android:id="@+id/btnChange"
-            android:layout_width="0sp"
-            android:layout_weight="0.3"
-            android:layout_height="35sp"
-            android:layout_gravity="center"
-            android:text="CHANGE"
-            android:layout_marginTop="10sp"
-            android:layout_marginBottom="10sp"
-            android:layout_marginRight="10sp"
-            android:textColor="#fff"
-            android:background="@drawable/custom_btn_green"
-            />
-    </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvGroundDetailTimes"
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="50sp"
+            android:layout_height="20sp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/back_arrow" />
+
+
+    </RelativeLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10sp"
-        android:layout_marginRight="10sp"
-        android:layout_marginTop="10sp"
-        />
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <!--</ScrollView>-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvGroundDetailImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_marginTop="10sp" />
 
-</LinearLayout>
-       <ScrollView
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
-           <LinearLayout
-               android:id="@+id/bottomViewBookingDetail"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:background="#fff"
-                android:visibility="gone"
-               android:orientation="vertical">
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginLeft="10sp"
-                   android:layout_marginTop="10sp"
-                   android:layout_marginRight="10sp"
-                   android:orientation="horizontal">
-                   <TextView
-                       android:layout_width="0sp"
-                       android:layout_weight="0.8"
-                       android:layout_height="wrap_content"
-                       android:text="Date"
-                       android:textStyle="bold"
-                       />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                   <ImageView
-                       android:id="@+id/ivCloseBookingDetail"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_gravity="right"
-                       android:src="@drawable/close" />
-               </LinearLayout>
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:orientation="horizontal"
-                   android:gravity="center"
-                   android:layout_marginTop="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginTop="5sp"
+                    android:background="#fff"
+                    android:orientation="horizontal">
 
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="Today"
-                       android:textSize="13sp"
-                       android:textStyle="bold"/>
+                    <LinearLayout
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:orientation="vertical">
 
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="Wednesday"
-                       android:layout_marginLeft="10dp"
-                       android:textSize="13sp"
-                       android:textStyle="bold"/>
+                            <TextView
+                                android:id="@+id/tvGroundDetailName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5sp"
+                                android:layout_marginTop="10sp"
+                                android:text="QATAR CLUB"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
 
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="Thursday"
-                       android:layout_marginLeft="10dp"
-                       android:textSize="13sp"
-                       android:textStyle="bold"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10sp"
+                                android:layout_marginTop="10sp"
+                                android:text="DOHA"
+                                android:textSize="10sp" />
+                        </LinearLayout>
 
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="Friday"
-                       android:layout_marginLeft="10dp"
-                       android:textSize="13sp"
-                       android:textStyle="bold"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="Saturady"
-                       android:layout_marginLeft="10dp"
-                       android:textSize="13sp"
-                       android:textStyle="bold"/>
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="Sunday"
-                       android:layout_marginLeft="10dp"
-                       android:textSize="13sp"
-                       android:textStyle="bold"/>
-               </LinearLayout>
-               <LinearLayout
-                   android:layout_height="70dp"
-                   android:layout_width="match_parent"
-                   android:orientation="horizontal"
-                   android:layout_marginTop="10dp"
-                   android:gravity="center"
-                   android:layout_gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5sp"
+                                android:layout_marginTop="10sp"
+                                android:text="Information:"
+                                android:textSize="12sp" />
 
-                   <android.support.v7.widget.RecyclerView
-                       android:layout_height="wrap_content"
-                       android:layout_width="wrap_content"
-                       android:orientation="horizontal"
-                       android:id="@+id/dayslistview2">
-                   </android.support.v7.widget.RecyclerView>
+                            <TextView
+                                android:id="@+id/tvInfoGroundDetail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5sp"
+                                android:layout_marginLeft="5sp"
+                                android:layout_marginTop="10sp"
+                                android:gravity="left"
+                                android:text="outdoor football field"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </LinearLayout>
 
-               </LinearLayout>
+                    <View
+                        android:layout_width="2sp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2sp"
+                        android:background="#eee" />
 
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Time"
-                   android:layout_marginLeft="10dp"
-                   android:textSize="15sp"
-                   android:textStyle="bold"
-                   android:layout_marginTop="10dp"/>
+                    <LinearLayout
+                        android:id="@+id/layoutFavourite"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:orientation="vertical">
 
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:orientation="horizontal"
-                   android:layout_marginLeft="10sp"
-                   >
+                        <ImageView
+                            android:id="@+id/ivLike"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5sp"
+                            android:src="@drawable/like" />
 
-                   <TextView
-                       android:id="@+id/tvTime1BookingDetail"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:gravity="center"
-                       android:text="MORNING\n7AM - 11AM"
-                       android:paddingBottom="8sp"
-                       android:paddingTop="5sp"
-                       android:paddingLeft="10sp"
-                       android:paddingRight="10sp"
-                       android:textColor="#fff"
-                       android:background="@drawable/custom_rounded_shape"
-                       android:layout_gravity="center"
-                       android:textSize="12sp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="10sp"
+                            android:layout_marginLeft="2sp"
+                            android:layout_marginRight="2sp"
+                            android:layout_marginTop="5sp"
+                            android:gravity="center"
+                            android:text="ADD TO \nFAVOURITE"
+                            android:textSize="10sp" />
+                    </LinearLayout>
 
-                   <TextView
-                       android:id="@+id/tvTime2BookingDetail"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_gravity="center"
-                       android:layout_marginLeft="20sp"
-                       android:gravity="center"
-                       android:padding="5sp"
-                       android:text="NOON\n12AM - 2AM"
-                       android:textColor="#BDBDBD"
-                       android:textSize="12sp" />
-                   <TextView
-                       android:id="@+id/tvTime3BookingDetail"
-                       android:layout_width="80sp"
-                       android:layout_height="40sp"
-                       android:text="AFTERNOON\n7AM - 5PM"
-                       android:textSize="12dp"
-                       android:gravity="center"
-                       android:layout_marginLeft="30sp"
-                       android:textColor="#BDBDBD" />
-               </LinearLayout>
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Durration"
-                   android:layout_marginLeft="10dp"
-                   android:textSize="15sp"
-                   android:textStyle="bold"
-                   android:layout_marginTop="10dp"/>
+                    <View
+                        android:layout_width="2sp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2sp"
+                        android:background="#eee" />
 
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="10dp"
-                   android:layout_marginLeft="10sp"
-                   android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:orientation="vertical">
 
-                   <TextView
-                       android:id="@+id/btnDuration1BookingDetail"
-                       android:layout_width="80sp"
-                       android:layout_height="40sp"
-                       android:gravity="center"
-                       android:background="@drawable/custom_rounded_shape"
-                       android:text="30 minutes"
-                       android:textSize="13sp"
-                       android:textAllCaps="false"
-                       android:textColor="#FFFFFF" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5sp"
+                            android:src="@drawable/location" />
+
+                        <TextView
+                            android:id="@+id/tvLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="2sp"
+                            android:layout_marginRight="2sp"
+                            android:layout_marginTop="5sp"
+                            android:text="LOCATION"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
 
 
-                   <TextView
-                       android:id="@+id/btnDuration2BookingDetail"
-                       android:layout_width="80sp"
-                       android:layout_height="40sp"
-                       android:layout_marginLeft="20dp"
-                       android:text="60 minutes"
-                       android:textAllCaps="false"
-                       android:textColor="#BDBDBD"
-                       android:gravity="center"
-                       android:textSize="12dp" />
+                <Button
+                    android:id="@+id/btnBookNowBookingDetail"
+                    android:layout_width="100sp"
+                    android:layout_height="40sp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10sp"
+                    android:visibility="gone"
+                    android:background="@drawable/custom_btn_green"
+                    android:text="Book Now"
+                    android:textColor="#fff" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvGroundDetailTimes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10sp"/>
 
 
-                   <TextView
-                       android:id="@+id/btnDuration3BookingDetail"
-                       android:layout_width="80sp"
-                       android:layout_height="40sp"
-                       android:layout_marginLeft="10dp"
-                       android:text="90 minutes"
-                       android:gravity="center"
-                       android:textColor="#BDBDBD"
-                       android:textAllCaps="false"
-                       android:textSize="12dp" />
-               </LinearLayout>
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Sports"
-                   android:layout_marginLeft="10dp"
-                   android:textSize="15sp"
-                   android:textStyle="bold"
-                   android:layout_marginTop="10dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginTop="5sp"
+                    android:background="#fff"
+                    android:orientation="horizontal">
 
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:orientation="horizontal"
-                   android:layout_marginLeft="10sp"
-                   android:layout_marginTop="10dp">
+                    <TextView
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5sp"
+                        android:layout_weight="0.7"
+                        android:text="TODAY EVENING FOOTBALL"
+                        android:textStyle="italic" />
 
-                   <TextView
-                       android:id="@+id/btnSports1BookingDetail"
-                       android:layout_width="80sp"
-                       android:layout_height="40sp"
-                       android:gravity="center"
-                       android:text="FOOTBALL"
-                       android:textAllCaps="false"
-                       android:textSize="13dp"
-                       android:textColor="#FFFFFF"
-                       android:background="@drawable/custom_rounded_shape"/>
+                    <Button
+                        android:id="@+id/btnChange"
+                        android:layout_width="0sp"
+                        android:layout_height="35sp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10sp"
+                        android:layout_marginRight="10sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_weight="0.3"
+                        android:background="@drawable/custom_btn_green"
+                        android:text="CHANGE"
+                        android:textColor="#fff" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomViewBookingDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_marginTop="10sp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:text="Date"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/ivCloseBookingDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:src="@drawable/close" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Today"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
 
-                   <TextView
-                       android:id="@+id/btnSports2BookingDetail"
-                       android:layout_width="80sp"
-                       android:layout_height="40sp"
-                       android:gravity="center"
-                       android:text="BASEBALL"
-                       android:textSize="12dp"
-                       android:layout_marginLeft="20dp"
-                       android:textColor="#BDBDBD" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Wednesday"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Thursday"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Friday"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Saturady"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Sunday"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/dayslistview2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Time"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvTime1BookingDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/custom_rounded_shape"
+                    android:gravity="center"
+                    android:paddingBottom="8sp"
+                    android:paddingLeft="10sp"
+                    android:paddingRight="10sp"
+                    android:paddingTop="5sp"
+                    android:text="MORNING\n7AM - 11AM"
+                    android:textColor="#fff"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvTime2BookingDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20sp"
+                    android:gravity="center"
+                    android:padding="5sp"
+                    android:text="NOON\n12AM - 2AM"
+                    android:textColor="#BDBDBD"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvTime3BookingDetail"
+                    android:layout_width="80sp"
+                    android:layout_height="40sp"
+                    android:layout_marginLeft="30sp"
+                    android:gravity="center"
+                    android:text="AFTERNOON\n7AM - 5PM"
+                    android:textColor="#BDBDBD"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Durration"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btnDuration1BookingDetail"
+                    android:layout_width="80sp"
+                    android:layout_height="40sp"
+                    android:background="@drawable/custom_rounded_shape"
+                    android:gravity="center"
+                    android:text="30 minutes"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp" />
 
 
-                   <TextView
-                       android:gravity="center"
-                       android:id="@+id/btnSports3BookingDetail"
-                       android:layout_width="80sp"
-                       android:layout_height="40sp"
-                       android:text="CRICKET"
-                       android:textSize="12dp"
-                       android:layout_marginLeft="10dp"
-                       android:textColor="#BDBDBD" />
-               </LinearLayout>
+                <TextView
+                    android:id="@+id/btnDuration2BookingDetail"
+                    android:layout_width="80sp"
+                    android:layout_height="40sp"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="60 minutes"
+                    android:textAllCaps="false"
+                    android:textColor="#BDBDBD"
+                    android:textSize="12dp" />
 
-               <Button
-                   android:id="@+id/findSpotBookingDetail"
-                   android:layout_width="200dp"
-                   android:layout_height="wrap_content"
-                   android:text="find a spot"
-                   android:background="@drawable/custom_rounded_shape"
-                   android:layout_marginTop="10dp"
-                   android:gravity="center"
-                   android:layout_marginBottom="10sp"
-                   android:textColor="#FFF"
-                   android:layout_gravity="center"/>
-           </LinearLayout>
-       </ScrollView>
 
-   </FrameLayout>
+                <TextView
+                    android:id="@+id/btnDuration3BookingDetail"
+                    android:layout_width="80sp"
+                    android:layout_height="40sp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="90 minutes"
+                    android:textAllCaps="false"
+                    android:textColor="#BDBDBD"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Sports"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btnSports1BookingDetail"
+                    android:layout_width="80sp"
+                    android:layout_height="40sp"
+                    android:background="@drawable/custom_rounded_shape"
+                    android:gravity="center"
+                    android:text="FOOTBALL"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13dp" />
+
+
+                <TextView
+                    android:id="@+id/btnSports2BookingDetail"
+                    android:layout_width="80sp"
+                    android:layout_height="40sp"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="BASEBALL"
+                    android:textColor="#BDBDBD"
+                    android:textSize="12dp" />
+
+
+                <TextView
+                    android:id="@+id/btnSports3BookingDetail"
+                    android:layout_width="80sp"
+                    android:layout_height="40sp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="CRICKET"
+                    android:textColor="#BDBDBD"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/findSpotBookingDetail"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10sp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_rounded_shape"
+                android:gravity="center"
+                android:text="find a spot"
+                android:textColor="#FFF" />
+        </LinearLayout>
+
+    </FrameLayout>
 </LinearLayout>

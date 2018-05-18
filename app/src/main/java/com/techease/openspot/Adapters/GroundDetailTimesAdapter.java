@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,29 +78,42 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
                         holder.editor.putInt("time_id",model.getTimeId()).commit();
                         holder.editor.putString("price",model.getPrice()).commit();
                         holder.editor.putString("time",model.getTimeFrom()+" TO "+model.getTimeTo()).commit();
-                        BookingDetailsFragment.btnBookNow.setVisibility(View.VISIBLE);
-                        BookingDetailsFragment.btnBookNow.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String token=holder.sharedPreferences.getString("token","");
-                                if (!token.equals(""))
-                                {
-                                    Fragment fragment=new BookNowFragment();
-                                    ((AppCompatActivity) context).getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
-                                }
-                                else
-                                {
-                                    Fragment fragment=new BookingInformationFragment();
-                                    ((AppCompatActivity) context).getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
+                        if(check>0)
+                        {
+                            BookingDetailsFragment.btnBookNow.setVisibility(View.VISIBLE);
+                            BookingDetailsFragment.btnBookNow.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    String token=holder.sharedPreferences.getString("token","");
+                                    if (!token.equals(""))
+                                    {
+                                        Fragment fragment=new BookNowFragment();
+                                        ((AppCompatActivity) context).getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
+                                    }
+                                    else
+                                    {
+                                        Fragment fragment=new BookingInformationFragment();
+                                        ((AppCompatActivity) context).getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
 
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
+
 
                     }
                     else
                     {
-                        BookingDetailsFragment.btnBookNow.setVisibility(View.GONE);
+                        check--;
+                        if (check>0)
+                        {
+                            BookingDetailsFragment.btnBookNow.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            BookingDetailsFragment.btnBookNow.setVisibility(View.GONE);
+                        }
+
                     }
 
                 }
@@ -113,12 +127,13 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
         return models.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder  {
         TextView tvTime,tvPrice;
         LinearLayout relativeLayout;
         SharedPreferences sharedPreferences;
         SharedPreferences.Editor editor;
         CheckBox checkBox;
+
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -129,5 +144,7 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
             checkBox=(CheckBox)itemView.findViewById(R.id.cbx);
             relativeLayout=(LinearLayout) itemView.findViewById(R.id.linearLayoutTimeAndPrice);
         }
+
+
     }
 }

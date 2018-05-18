@@ -8,9 +8,8 @@
     android:layout_height="40sp"
     android:text="abc"
     android:gravity="center"
-    android:background="@drawable/custom_btn_green"
     android:padding="3sp"
-    android:textColor="#FFF"
+    android:textColor="#BDBDBD"
     android:textSize="15sp"
     android:layout_marginRight="5sp"
     android:id="@+id/todayDate"/>
