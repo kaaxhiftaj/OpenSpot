@@ -105,8 +105,10 @@ public class BookingPlacedActivity extends AppCompatActivity {
                     tvDate.setText(String.valueOf(object.getString("date")));
                     tvDuration.setText(String.valueOf(object.getString("duration")));
                     tvTime.setText(String.valueOf(object.getString("time")));
-                    tvPrice.setText(String.valueOf(object.getString("price")));
+                //    tvPrice.setText(String.valueOf(object.getString("price")));
                     tvName.setText(String.valueOf(object.getString("name")));
+
+                    tvPrice.setText(String.valueOf(GroundDetailTimesAdapter.price));
 
                     if (alertDialog!=null)
                         alertDialog.dismiss();
@@ -140,7 +142,7 @@ public class BookingPlacedActivity extends AppCompatActivity {
                 params.put("time_id", String.valueOf(integer));
                 params.put("price",s);
                 params.put("date",date);
-                Log.d("zmaaParams",String.valueOf(params));
+                Log.d("MyParams",String.valueOf(params));
                 return params;
             }
         };

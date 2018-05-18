@@ -69,6 +69,7 @@ public class UserBookingsAdapter extends RecyclerView.Adapter<UserBookingsAdapte
             @Override
             public void onClick(View v) {
                 final String bookingId=model1.getId();
+                Toast.makeText(context, bookingId, Toast.LENGTH_SHORT).show();
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://openspot.qa/openspot/cancelBooking", new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

@@ -55,14 +55,10 @@ public class AllGroundsAdapter extends RecyclerView.Adapter<AllGroundsAdapter.Vi
                 String groundName=model1.getName();
                 String information=model1.getInformation();
                 holder.editor.putString("type",model1.getType()).commit();
-                holder.editor.putString("groundName",model1.getName()).commit();
-                holder.editor.putString("ground_id",model1.getId()).commit();
+                holder.editor.putString("ground_id",groundId).commit();
+                holder.editor.putString("info",information).commit();
+                holder.editor.putString("groundName",groundName).commit();
                 Fragment fragment=new BookingDetailsFragment();
-                Bundle bundle=new Bundle();
-                bundle.putString("groundId",groundId);
-                bundle.putString("info",information);
-                bundle.putString("groundName",groundName);
-                fragment.setArguments(bundle);
                 ((AppCompatActivity)context).getFragmentManager().beginTransaction().replace(R.id.containerMain,fragment).addToBackStack("abc").commit();
             }
         });

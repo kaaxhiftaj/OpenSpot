@@ -58,7 +58,9 @@ public class BookNowFragment extends Fragment {
 
         tvType.setText(strType);
         timeArray=GroundDetailTimesAdapter.timeArray;
-        tvTime.setText(timeArray.toString().replace("[","").replace("]","").replace(","," "));
+      //  tvTime.setText(timeArray.toString().replace("[","").replace("]","").replace(","," "));
+        tvTime.setText(GroundDetailTimesAdapter.timeFrom+" - "+GroundDetailTimesAdapter.timeTo);
+
         tvPrice.setText(String.valueOf(GroundDetailTimesAdapter.price));
         tvGroundName.setText(strGroundName);
 

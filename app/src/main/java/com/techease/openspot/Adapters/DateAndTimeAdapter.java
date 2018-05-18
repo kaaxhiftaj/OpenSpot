@@ -15,6 +15,10 @@ import com.techease.openspot.R;
 import com.techease.openspot.fragments.BookingDetailsFragment;
 import com.techease.openspot.fragments.ListOfAllBooking;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Adamnoor on 3/20/2018.
  */
@@ -41,8 +45,21 @@ public class DateAndTimeAdapter extends RecyclerView.Adapter<DateAndTimeAdapter.
             @Override
             public void onClick(View v) {
                 getDate=names[position];
-                int pos=position;
+
+                SimpleDateFormat input = new SimpleDateFormat("MMM-dd-yyyy");
+                SimpleDateFormat outputDate=new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    Date oneWayTripDate = input.parse(getDate);
+                    getDate= String.valueOf(outputDate.format(oneWayTripDate));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 ListOfAllBooking.filterDate=getDate;
+                if (BookingDetailsFragment.check==true)
+                {
+                    BookingDetailsFragment.filterDate=getDate;
+                }
+                holder.editor.putString("date",getDate).commit();
             }
         });
 

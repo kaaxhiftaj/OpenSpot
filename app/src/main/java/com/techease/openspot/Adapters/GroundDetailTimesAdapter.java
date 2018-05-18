@@ -32,6 +32,8 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
     List<GroundDetailTimesModel> models;
     public static  ArrayList<String> timeArray = new ArrayList<String>();
     public static int price;
+    int check=0;
+    public static String timeTo,timeFrom,tempTime;
     public static  ArrayList<Integer> timeIdArray = new ArrayList<Integer>();
     public static ArrayList<String> priceArray=new ArrayList<String>();
     public GroundDetailTimesAdapter(Context context, List<GroundDetailTimesModel> timesModels) {
@@ -47,17 +49,28 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final GroundDetailTimesModel model=models.get(position);
-            holder.tvTime.setText(model.getTimeTo());
+            holder.tvTime.setText(model.getTimeFrom()+" - "+model.getTimeTo());
             holder.tvPrice.setText(model.getPrice());
             timeArray.clear();
             timeIdArray.clear();
             priceArray.clear();
+        check=0;
             holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked)
                     {
+                        check++;
                         timeArray.add(model.getTimeTo());
+                        if(check==1)
+                        {
+                            timeTo=model.getTimeTo();
+                            timeFrom=model.getTimeFrom();
+                        }
+                        else
+                        {
+                            timeTo=model.getTimeTo();
+                        }
                         timeIdArray.add(model.getTimeId());
                         price +=Integer.parseInt(model.getPrice());
                         priceArray.add(model.getPrice());
@@ -91,7 +104,6 @@ public class GroundDetailTimesAdapter extends RecyclerView.Adapter<GroundDetailT
 
                 }
             });
-
 
 
     }

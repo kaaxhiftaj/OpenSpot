@@ -66,14 +66,13 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
     tvTime1,tvTime2,tvTime3,tvNoGroundFound,tvNoOfGrounds;
     RecyclerView daysRecycler, groundsRecycler;
     DateAndTimeAdapter recyclerViewAdapter;
-    LinearLayout linearLayoutSpot;
+    LinearLayout linearLayoutSpot,linearLayoutTopSearchBar;
     List<AllGroundsModel> list;
     AllGroundsAdapter allGroundsAdapter;
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    SimpleDateFormat year;
-    String  filterSport="football",  filterDuration = "30", filterTimeTo, filterTimeFrom,formatYear;
+    String  filterSport="football",  filterDuration = "30",time="Morning";
     public static String filterDate;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,6 +88,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
         daysRecycler = (RecyclerView) view.findViewById(R.id.dayslistview);
         linearLayoutSpot = (LinearLayout) view.findViewById(R.id.bottomView);
         searchView = (EditText) view.findViewById(R.id.searchView);
+        linearLayoutTopSearchBar=(LinearLayout)view.findViewById(R.id.llsvsp);
         tvNoOfGrounds=(TextView)view.findViewById(R.id.tvNoOfGrounds);
         tvNoGroundFound=(TextView)view.findViewById(R.id.tvNoGroundFound);
         groundsRecycler = (RecyclerView) view.findViewById(R.id.rvAllBookings);
@@ -120,17 +120,13 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
         list = new ArrayList<>();
 
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MMM-dd");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = df.format(c);
         editor.putString("date",formattedDate).commit();
 
-        //for getting year
-        SimpleDateFormat formatYears = new SimpleDateFormat("yyyy");
-        formatYear= formatYears.format(c);
-        editor.putString("filteryear",formatYear).commit();
 
         //for next 7 days
-        SimpleDateFormat format = new SimpleDateFormat("MMM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("MMM-dd-yyyy");
         Calendar date2 = Calendar.getInstance();
         String[] dateStringArray2 = new String[7];
         for(int i = 0; i < 7;i++)
@@ -157,6 +153,8 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvNoOfGrounds.setVisibility(View.GONE);
+                linearLayoutTopSearchBar.setVisibility(View.GONE);
                 linearLayoutSpot.setVisibility(View.VISIBLE);
 
             }
@@ -164,7 +162,10 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
 
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                tvNoOfGrounds.setVisibility(View.VISIBLE);
+                linearLayoutTopSearchBar.setVisibility(View.VISIBLE);
                 linearLayoutSpot.setVisibility(View.GONE);
             }
         });
@@ -176,12 +177,15 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 if (alertDialog == null)
                     alertDialog = AlertsUtils.createProgressDialog(getActivity());
                     alertDialog.show();
+                linearLayoutTopSearchBar.setVisibility(View.VISIBLE);
+                tvNoOfGrounds.setVisibility(View.VISIBLE);
                 linearLayoutSpot.setVisibility(View.GONE);
                 apiCallForSearch();
 
             }
         });
 
+        editor.putString("time",time).commit();
         return view;
     }
 
@@ -245,15 +249,14 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("date",formatYear+"-"+filterDate);
-                editor.putString("date",filterDate+"/"+formatYear).commit();
+                params.put("date",filterDate);
+                editor.putString("date",filterDate).commit();
                 params.put("duration",filterDuration);
                 params.put("sport",filterSport);
                 params.put("slot","Morning");
                 Log.d("zmaParm",params.toString());
                 return params;
             }
-
         };
         RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000,
@@ -355,9 +358,8 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 tvTime1.setTextColor(Color.WHITE);
                 tvTime2.setTextColor(Color.GRAY);
                 tvTime3.setTextColor(Color.GRAY);
-                filterTimeTo = "7AM";
-                filterTimeFrom = "11AM";
-                editor.putString("time","Morning").commit();
+                time="Morning";
+                editor.putString("time",time).commit();
                 break;
             case R.id.tvTime2:
                 tvTime2.setBackgroundResource(R.drawable.custom_rounded_shape);
@@ -366,9 +368,8 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 tvTime2.setTextColor(Color.WHITE);
                 tvTime1.setTextColor(Color.GRAY);
                 tvTime3.setTextColor(Color.GRAY);
-                filterTimeTo = "12AM";
-                filterTimeFrom = "2AM";
-                editor.putString("time","Noon").commit();
+                time="Noon";
+                editor.putString("time",time).commit();
                 break;
             case R.id.tvTime3:
                 Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
@@ -378,9 +379,8 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 tvTime3.setTextColor(Color.WHITE);
                 tvTime2.setTextColor(Color.GRAY);
                 tvTime1.setTextColor(Color.GRAY);
-                filterTimeTo = "3PM";
-                filterTimeFrom = "5PM";
-                editor.putString("time","Afternoon").commit();
+                time="AfterNoon";
+                editor.putString("time",time).commit();
                 break;
             case R.id.btnSports1:
                 btnSportFootball.setBackgroundResource(R.drawable.custom_rounded_shape);
@@ -390,6 +390,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 btnSportBasketBall.setBackgroundResource(0);
                 btnSportCricket.setBackgroundResource(0);
                 filterSport = "Football";
+                editor.putString("sport","Football").commit();
                 break;
             case R.id.btnSports2:
                 btnSportBasketBall.setBackgroundResource(R.drawable.custom_rounded_shape);
@@ -399,6 +400,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 btnSportFootball.setBackgroundResource(0);
                 btnSportCricket.setBackgroundResource(0);
                 filterSport = "BasketBall";
+                editor.putString("sport","BasketBall").commit();
                 break;
             case R.id.btnSports3:
                 btnSportCricket.setBackgroundResource(R.drawable.custom_rounded_shape);
@@ -408,6 +410,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 btnSportBasketBall.setBackgroundResource(0);
                 btnSportFootball.setBackgroundResource(0);
                 filterSport = "Cricket";
+                editor.putString("sport","Cricket").commit();
                 break;
             case R.id.btnDuration1:
                 btnDuration30.setBackgroundResource(R.drawable.custom_rounded_shape);
@@ -417,6 +420,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 btnDuration60.setBackgroundResource(0);
                 btnDuration90.setBackgroundResource(0);
                 filterDuration = "30";
+                editor.putString("duration","30").commit();
                 break;
             case R.id.btnDuration2:
                 btnDuration60.setBackgroundResource(R.drawable.custom_rounded_shape);
@@ -426,6 +430,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 btnDuration30.setBackgroundResource(0);
                 btnDuration90.setBackgroundResource(0);
                 filterDuration = "60";
+                editor.putString("duration","60").commit();
                 break;
             case R.id.btnDuration3:
                 btnDuration90.setBackgroundResource(R.drawable.custom_rounded_shape);
@@ -435,6 +440,7 @@ public class ListOfAllBooking extends Fragment implements View.OnClickListener {
                 btnDuration60.setBackgroundResource(0);
                 btnDuration30.setBackgroundResource(0);
                 filterDuration = "90";
+                editor.putString("duration","90").commit();
                 break;
             default:
                 break;
